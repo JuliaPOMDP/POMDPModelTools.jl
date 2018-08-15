@@ -59,20 +59,44 @@ iterator(d::SparseCat) = d.vals
 weighted_iterator(d::SparseCat) = d
 
 # iterator for general SparseCat
-Base.start(d::SparseCat) = (start(d.vals), start(d.probs))
-function Base.next(d::SparseCat, state::Tuple)
-    val, vstate = next(d.vals, first(state))
-    prob, pstate = next(d.probs, last(state))
-    return (val=>prob, (vstate, pstate))
+function Base.iterate(d::SparseCat)
+    val, vstate = iterate(d.vals)
+    prob, pstate = iterate(d.probs)
+    return ((val=>prob), (vstate, pstate))
 end
-Base.done(d::SparseCat, state::Tuple) = done(d.vals, first(state)) || done(d.vals, last(state))
+function Base.iterate(d::SparseCat, dstate::Tuple)
+    vstate, pstate = dstate
+    val, vstate_next = iterate(d.vals, vstate)
+    prob, pstate_next = iterate(d.probs, pstate)
+    if vstate_next == nothing
+        return nothing 
+    end
+    return ((val=>prob), (vstate_next, pstate_next))
+end
+
+# Base.start(d::SparseCat) = (start(d.vals), start(d.probs))
+# function Base.next(d::SparseCat, state::Tuple)
+#     val, vstate = next(d.vals, first(state))
+#     prob, pstate = next(d.probs, last(state))
+#     return (val=>prob, (vstate, pstate))
+# end
+# Base.done(d::SparseCat, state::Tuple) = done(d.vals, first(state)) || done(d.vals, last(state))
 
 # iterator for SparseCat with AbstractArrays
-Base.start(d::SparseCat{V,P}) where {V<:AbstractArray, P<:AbstractArray} = 1
-function Base.next(d::SparseCat{V,P}, state::Integer) where {V<:AbstractArray, P<:AbstractArray}
+function Base.iterate(d::SparseCat{V,P}, state::Integer=1) where {V<:AbstractArray, P<:AbstractArray}
+    if state > length(d)
+        return nothing 
+    end
     return (d.vals[state]=>d.probs[state], state+1)
 end
-Base.done(d::SparseCat{V,P}, state::Integer) where {V<:AbstractArray, P<:AbstractArray} = state > length(d)
+
+
+# Base.start(d::SparseCat{V,P}) where {V<:AbstractArray, P<:AbstractArray} = 1
+# function Base.next(d::SparseCat{V,P}, state::Integer) where {V<:AbstractArray, P<:AbstractArray}
+#     return (d.vals[state]=>d.probs[state], state+1)
+# end
+# Base.done(d::SparseCat{V,P}, state::Integer) where {V<:AbstractArray, P<:AbstractArray} = state > length(d)
+
 
 
 Base.length(d::SparseCat) = min(length(d.vals), length(d.probs))

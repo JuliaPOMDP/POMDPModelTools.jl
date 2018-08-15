@@ -12,7 +12,18 @@ pdf(d::BoolDistribution, s::Bool) = s ? d.p : 1.0-d.p
 
 rand(rng::AbstractRNG, d::BoolDistribution) = rand(rng) <= d.p
 
-iterator(d::BoolDistribution) = [true, false]
+function Base.iterate(d::BoolDistribution, state::Integer=1)
+    if state == 1
+        return (true, 2) 
+    elseif state == 2 
+        return (false, 3)
+    else
+        return nothing
+    end
+end
+    
+
+# iterator(d::BoolDistribution) = [true, false]
 
 ==(d1::BoolDistribution, d2::BoolDistribution) = d1.p == d2.p
 

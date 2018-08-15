@@ -20,6 +20,13 @@ end
 
 rand(rng::AbstractRNG, d::UnivariateDistribution) = Distributions.quantile(d, rand(rng)) # fallback
 
+function Base.iterate(d::Categorical)
+    iterate(1:Distributions.ncategories(d))
+end
+function Base.iterate(d::Categorical, state)
+    iterate(1:Distributions.ncategories(d), state)
+end
+
 iterator(d::Categorical) = 1:Distributions.ncategories(d)
 
 # sampletype(d::UnivariateDistribution) = eltype(d)

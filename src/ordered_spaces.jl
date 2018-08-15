@@ -28,7 +28,7 @@ Return an `AbstractVector` of observations ordered according to `obs_index(pomdp
 ordered_observations(pomdp::POMDP) = ordered_vector(obs_type(typeof(pomdp)), o->obs_index(pomdp,o), iterator(observations(pomdp)), n_observations(pomdp), "observation")
 
 function ordered_vector(T::Type, index::Function, iterator, len, singular, plural=singular*"s")
-    a = Array{T}(len)
+    a = Array{T}(undef, len)
     gotten = falses(len)
     for x in iterator
         id = index(x)
@@ -45,14 +45,14 @@ function ordered_vector(T::Type, index::Function, iterator, len, singular, plura
         gotten[id] = true
     end
     if !all(gotten)
-        missing = find(.!gotten)
-        warn("""
+        missing = findall(.!gotten)
+        @warn """
              Problem creating an ordered vector of $plural in ordered_$plural(...). There is likely a mistake in $(singular)_index(...) or n_$plural(...).
 
              n_$plural(...) was $len.
 
              $plural corresponding to the following indices were missing from iterator($plural(...)): $missing
-             """)
+             """
     end
     return a
 end
