@@ -13,10 +13,10 @@ actions(mdp::MDP{S,Int}, s::S, r::AbstractRange) where S = actions(mdp)
 rand(rng::AbstractRNG, t::Tuple{Bool, Bool}) = rand(rng, Bool)
 rand(t::Tuple{Bool, Bool}) = rand(Bool)
 
-iterator(s::AbstractVector) = s
-iterator(s::Tuple) = s
-iterator(r::AbstractRange) = r
-iterator(g::Base.Generator) = g
+support(s::AbstractVector) = s
+support(s::Tuple) = s
+support(r::AbstractRange) = r
+support(g::Base.Generator) = g
 
 states(mdp::MDP{Bool}) = (true, false)
 states(mdp::POMDP{Bool}) = (true, false)

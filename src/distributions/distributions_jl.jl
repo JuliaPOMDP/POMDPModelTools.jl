@@ -27,14 +27,14 @@ function Base.iterate(d::Categorical, state)
     iterate(1:Distributions.ncategories(d), state)
 end
 
-iterator(d::Categorical) = 1:Distributions.ncategories(d)
+support(d::Categorical) = 1:Distributions.ncategories(d)
 
 # sampletype(d::UnivariateDistribution) = eltype(d)
 # sampletype(d::MultivariateDistribution) = Vector{eltype(d)}
 # sampletype(d::Distribution{Matrixvariate}) = Matrix{eltype(d)}
 
 # for MvNormal - this should be removed once Distributions.jl PR #597 is in a tagged Distributions.jl release
-rand(rng::AbstractRNG, d::MvNormal) = _rand!(rng, d, Vector{eltype(d)}(length(d)))
+rand(rng::AbstractRNG, d::MvNormal) = _rand!(rng, d, Vector{eltype(d)}(undef, length(d)))
 
 function _rand!(rng::AbstractRNG, d::MvNormal, x::VecOrMat)
     Distributions.add!(Distributions.unwhiten!(d.Σ, randn!(rng, x)), d.μ)

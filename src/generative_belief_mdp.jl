@@ -9,7 +9,7 @@ end
 function GenerativeBeliefMDP(pomdp::P, up::U) where {P<:POMDP, U<:Updater}
     # XXX hack to determine belief type
     b0 = initialize_belief(up, initial_state_distribution(pomdp))
-    GenerativeBeliefMDP{P, U, typeof(b0), action_type(pomdp)}(pomdp, up)
+    GenerativeBeliefMDP{P, U, typeof(b0), actiontype(pomdp)}(pomdp, up)
 end
 
 function generate_sr(bmdp::GenerativeBeliefMDP, b, a, rng::AbstractRNG)
@@ -30,7 +30,7 @@ end
 actions(bmdp::GenerativeBeliefMDP{P,U,B,A}, b::B) where {P,U,B,A} = actions(bmdp.pomdp, b)
 actions(bmdp::GenerativeBeliefMDP) = actions(bmdp.pomdp)
 
-isterminal(bmdp::GenerativeBeliefMDP, b) = all(isterminal(bmdp.pomdp, s) for s in iterator(b))
+isterminal(bmdp::GenerativeBeliefMDP, b) = all(isterminal(bmdp.pomdp, s) for s in support(b))
 
 discount(bmdp::GenerativeBeliefMDP) = discount(bmdp.pomdp)
 

@@ -23,7 +23,7 @@ function Base.iterate(d::BoolDistribution, state::Integer=1)
 end
     
 
-# iterator(d::BoolDistribution) = [true, false]
+support(d::BoolDistribution) = [true, false]
 
 ==(d1::BoolDistribution, d2::BoolDistribution) = d1.p == d2.p
 
