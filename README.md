@@ -55,7 +55,7 @@ Transforms a pomdp (and a belief updater) into a belief-space MDP.
 Example (note that the states of the belief MDP are beliefs):
 ```julia
 using POMDPModels
-using POMDPToolbox
+using POMDPModelTools
 
 pomdp = BabyPOMDP()
 updater = BabyBeliefUpdater(pomdp)

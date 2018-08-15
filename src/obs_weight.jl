@@ -79,7 +79,7 @@ function implemented(f::typeof(obs_weight), TT::Type)
     else
         return method_exists(f, TT)
     end
-    if m.module == POMDPToolbox && !reqs_met
+    if m.module == POMDPModelTools && !reqs_met
         return false
     else
         true

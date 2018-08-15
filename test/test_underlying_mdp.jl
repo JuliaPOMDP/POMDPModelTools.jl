@@ -5,8 +5,8 @@ mdp = UnderlyingMDP(pomdp)
 
 @test n_states(mdp) == n_states(pomdp)
 @test states(mdp) == states(pomdp)
-s_mdp = rand(MersenneTwister(1), initial_state_distribution(mdp))
-s_pomdp = rand(MersenneTwister(1), initial_state_distribution(pomdp))
+s_mdp = rand(MersenneTwister(1), initialstate_distribution(mdp))
+s_pomdp = rand(MersenneTwister(1), initialstate_distribution(pomdp))
 
 @test s_mdp == s_pomdp
 

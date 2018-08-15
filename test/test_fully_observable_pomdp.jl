@@ -7,8 +7,8 @@ pomdp = FullyObservablePOMDP(mdp)
 @test n_observations(pomdp) == n_states(pomdp)
 @test state_type(pomdp) == obs_type(pomdp)
 
-s_po = initial_state(pomdp, MersenneTwister(1))
-s_mdp = initial_state(mdp, MersenneTwister(1))
+s_po = initialstate(pomdp, MersenneTwister(1))
+s_mdp = initialstate(mdp, MersenneTwister(1))
 @test s_po == s_mdp
 
 solver = ValueIterationSolver(max_iterations = 100)

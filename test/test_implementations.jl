@@ -6,8 +6,8 @@ mutable struct TestPOMDP <: POMDP{Bool, Bool, Bool} end
 @test actions(TestPOMDP()) == (true, false)
 
 a = [1,2,3]
-@test iterator(a) == a
-@test iterator((1,2,3)) == (1,2,3)
+@test support(a) == a
+@test support((1,2,3)) == (1,2,3)
 
 @test states(TestMDP()) == (true, false)
 @test states(TestPOMDP()) == (true, false)

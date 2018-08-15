@@ -3,8 +3,8 @@ d = BoolDistribution(0.3)
 @test pdf(d, true) == 0.3
 @test pdf(d, false) == 0.7
 
-# testing iterator
-@test iterator(d) == [true, false]
+# testing support
+@test support(d) == [true, false]
 
 # testing ==
 d2 = BoolDistribution(0.3)

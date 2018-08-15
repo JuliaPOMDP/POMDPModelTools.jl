@@ -10,10 +10,10 @@ function UnderlyingMDP(pomdp::POMDP{S, A, O}) where {S,A,O}
 end
 
 POMDPs.transition(mdp::UnderlyingMDP{P, S, A}, s::S, a::A) where {P,S,A}= transition(mdp.pomdp, s, a)
-POMDPs.initial_state_distribution(mdp::UnderlyingMDP) = initial_state_distribution(mdp.pomdp)
+POMDPs.initialstate_distribution(mdp::UnderlyingMDP) = initialstate_distribution(mdp.pomdp)
 POMDPs.generate_s(mdp::UnderlyingMDP, s, a, rng::AbstractRNG) = generate_s(mdp.pomdp, s, a, rng)
 POMDPs.generate_sr(mdp::UnderlyingMDP, s, a, rng::AbstractRNG) = generate_sr(mdp.pomdp, s, a, rng)
-POMDPs.initial_state(mdp::UnderlyingMDP, rng::AbstractRNG) = initial_state(mdp.pomdp, rng)
+POMDPs.initialstate(mdp::UnderlyingMDP, rng::AbstractRNG) = initialstate(mdp.pomdp, rng)
 POMDPs.states(mdp::UnderlyingMDP) = states(mdp.pomdp)
 POMDPs.actions(mdp::UnderlyingMDP) = actions(mdp.pomdp)
 POMDPs.reward(mdp::UnderlyingMDP{P, S, A}, s::S, a::A) where {P,S,A} = reward(mdp.pomdp, s, a)

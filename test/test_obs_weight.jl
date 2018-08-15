@@ -1,18 +1,18 @@
-import POMDPToolbox: obs_weight
+import POMDPModelTools: obs_weight
 import POMDPs: observation
 
-struct P <: POMDP{Void, Void, Void} end
+struct P <: POMDP{Nothing, Nothing, Nothing} end
 
-@test !@implemented obs_weight(::P, ::Void, ::Void, ::Void, ::Void)
-@test !@implemented obs_weight(::P, ::Void, ::Void, ::Void)
-@test !@implemented obs_weight(::P, ::Void, ::Void)
+@test !@implemented obs_weight(::P, ::Nothing, ::Nothing, ::Nothing, ::Nothing)
+@test !@implemented obs_weight(::P, ::Nothing, ::Nothing, ::Nothing)
+@test !@implemented obs_weight(::P, ::Nothing, ::Nothing)
 
-obs_weight(::P, ::Void, ::Void, ::Void) = 1.0
-@test @implemented obs_weight(::P, ::Void, ::Void, ::Void)
-@test @implemented obs_weight(::P, ::Void, ::Void, ::Void, ::Void)
-@test !@implemented obs_weight(::P, ::Void, ::Void)
+obs_weight(::P, ::Nothing, ::Nothing, ::Nothing) = 1.0
+@test @implemented obs_weight(::P, ::Nothing, ::Nothing, ::Nothing)
+@test @implemented obs_weight(::P, ::Nothing, ::Nothing, ::Nothing, ::Nothing)
+@test !@implemented obs_weight(::P, ::Nothing, ::Nothing)
 
 @test obs_weight(P(), nothing, nothing, nothing, nothing) == 1.0
 
-observation(::P, ::Void) = nothing
-@test @implemented obs_weight(::P, ::Void, ::Void)
+observation(::P, ::Nothing) = nothing
+@test @implemented obs_weight(::P, ::Nothing, ::Nothing)

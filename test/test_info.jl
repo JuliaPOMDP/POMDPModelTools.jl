@@ -1,26 +1,48 @@
+mutable struct VoidUpdater <: Updater end
+# initialize_belief(::VoidUpdater, ::Any) = nothing
+# initialize_belief(::VoidUpdater, ::Any, ::Any) = nothing
+POMDPs.update(::VoidUpdater, ::B, ::Any, ::Any, b=nothing) where B = nothing
+
+mutable struct RandomPolicy{P <: Union{MDP, POMDP}} <: Policy
+    rng::AbstractRNG
+    problem::P
+end
+RandomPolicy(problem::Union{POMDP,MDP};
+            rng=Random.GLOBAL_RNG) = RandomPolicy(rng, problem)
+
+function POMDPs.action(policy::RandomPolicy, s)
+    return rand(policy.rng, actions(policy.problem, s))
+end
+
+mutable struct RandomSolver <: Solver
+    rng::AbstractRNG
+end
+
+RandomSolver(;rng=Base.GLOBAL_RNG) = RandomSolver(rng)
+POMDPs.solve(solver::RandomSolver, problem::P) where {P<:Union{POMDP,MDP}} = RandomPolicy(solver.rng, problem)
 
 let
     rng = MersenneTwister(7)
 
     mdp = GridWorld()
-    s = initial_state(mdp, rng)
+    s = initialstate(mdp, rng)
     a = rand(rng, actions(mdp))
     @inferred generate_sri(mdp, s, a, rng)
 
     pomdp = TigerPOMDP()
-    s = initial_state(pomdp, rng)
+    s = initialstate(pomdp, rng)
     a = rand(rng, actions(pomdp))
     @inferred generate_sori(pomdp, s, a, rng)
 
-    policy = RandomPolicy(pomdp, rng=rng)
+    up = VoidUpdater()
+    policy = RandomPolicy(rng, pomdp)
     @inferred action_info(policy, s)
 
     solver = RandomSolver(rng=rng)
     policy, sinfo = solve_info(solver, pomdp)
-    @test isa(sinfo, Void)
+    @test isa(sinfo, Nothing)
 
-    up = updater(policy)
-    d = initial_state_distribution(pomdp)
+    d = initialstate_distribution(pomdp)
     b = initialize_belief(up, d)
     a = action(policy, b)
     sp, o = generate_so(pomdp, rand(rng, d), a, rng)
