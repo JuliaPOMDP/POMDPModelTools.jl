@@ -1,4 +1,3 @@
-
 let
     d = SparseCat([:a, :b, :d], [0.4, 0.5, 0.1])
     c = collect(weighted_iterator(d))
