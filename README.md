@@ -61,7 +61,7 @@ pomdp = BabyPOMDP()
 updater = BabyBeliefUpdater(pomdp)
 
 belief_mdp = GenerativeBeliefMDP(pomdp, updater)
-@show state_type(belief_mdp) # POMDPModels.BoolDistribution
+@show statetype(belief_mdp) # POMDPModels.BoolDistribution
 
 for (a, r, sp) in stepthrough(belief_mdp, RandomPolicy(belief_mdp), "a,r,sp", max_steps=10)
     @show a, r, sp

@@ -5,7 +5,7 @@ pomdp = FullyObservablePOMDP(mdp)
 
 @test observations(pomdp) == states(pomdp)
 @test n_observations(pomdp) == n_states(pomdp)
-@test state_type(pomdp) == obs_type(pomdp)
+@test statetype(pomdp) == obstype(pomdp)
 
 s_po = initialstate(pomdp, MersenneTwister(1))
 s_mdp = initialstate(mdp, MersenneTwister(1))

@@ -59,7 +59,7 @@ end
 
 @POMDP_require ordered_actions(mdp::Union{MDP,POMDP}) begin
     P = typeof(mdp)
-    @req action_index(::P, ::action_type(P))
+    @req action_index(::P, ::actiontype(P))
     @req n_actions(::P)
     @req actions(::P)
     as = actions(mdp)
@@ -67,7 +67,7 @@ end
 
 @POMDP_require ordered_states(mdp::Union{MDP,POMDP}) begin
     P = typeof(mdp)
-    @req state_index(::P, ::state_type(P))
+    @req state_index(::P, ::statetype(P))
     @req n_states(::P)
     @req states(::P)
     as = states(mdp)
@@ -75,7 +75,7 @@ end
 
 @POMDP_require ordered_observations(mdp::Union{MDP,POMDP}) begin
     P = typeof(mdp)
-    @req obs_index(::P, ::obs_type(P))
+    @req obs_index(::P, ::obstype(P))
     @req n_observations(::P)
     @req observations(::P)
     as = observations(mdp)
