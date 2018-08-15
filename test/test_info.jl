@@ -1,5 +1,3 @@
-using POMDPModels
-using POMDPToolbox
 
 let
     rng = MersenneTwister(7)
