@@ -1,7 +1,3 @@
-import Distributions.MvNormal
-import Distributions.Categorical
-import Distributions.Multinomial
-
 mvn = MvNormal([1.2,2.3], [1.4 1.0; 1.0 1.2])
 
 @test isapprox(pdf(mvn, [1.0, 1.0]),  0.04794537749882221)

@@ -1,10 +1,8 @@
 using POMDPModelTools
+using POMDPs
 using POMDPModels
-@static if VERSION < v"0.7.0-DEV.2005"
-    using Base.Test
-else
-    using Test
-end
+using Distributions
+using Test
 
 include("test_ordered_spaces.jl")
 include("test_generative_belief_mdp.jl")
@@ -14,6 +12,10 @@ include("test_weighted_iteration.jl")
 include("test_sparse_cat.jl")
 include("test_bool.jl")
 include("test_info.jl")
+include("test_obs_weight.jl")
+
+# following tests require DiscreteValueIteration
+POMDPs.add("DiscreteValueIteration")
+using DiscreteValueIteration
 include("test_fully_observable_pomdp.jl")
 include("test_underlying_mdp.jl")
-include("test_obs_weight.jl")
