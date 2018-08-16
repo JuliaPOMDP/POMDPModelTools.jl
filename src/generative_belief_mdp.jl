@@ -40,7 +40,7 @@ const warned_about_gbmdp_terminal=false
 function gbmdp_handle_terminal(pomdp::POMDP, updater::Updater, b, s, a, rng)
     global warned_about_gbmdp_terminal
     if !warned_about_gbmdp_terminal
-        warn("""
+        @warn("""
              Sampled a terminal state for a GenerativeBeliefMDP transition - not sure how to proceed, but will try.
 
              See $(@__FILE__) and implement a new method of POMDPToolbox.gbmdp_handle_terminal if you want special behavior in this case.
