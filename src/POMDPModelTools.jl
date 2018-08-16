@@ -8,10 +8,10 @@ using Random
 import POMDPs: actions, n_actions, action_index
 import POMDPs: states, n_states, state_index
 import POMDPs: observations, n_observations, obs_index
-import POMDPs: support, sampletype, generate_sr, initialstate, isterminal, discount
+import POMDPs: sampletype, generate_sr, initialstate, isterminal, discount
 # import POMDPs: Updater, update, initialize_belief, pdf, mode, updater
 import POMDPs: implemented
-import Distributions: pdf, mode, mean
+import Distributions: pdf, mode, mean, support
 import Random: rand, rand!
 import Statistics: mean
 import Base: ==

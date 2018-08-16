@@ -22,11 +22,11 @@ function obs_prob_consistency_check(pomdp::POMDP)
     aspace = actions(pomdp)
     ospace = observations(pomdp)
     # iterate through all s-a pairs
-    for s in support(sspace)
-        for a in support(aspace)
+    for s in sspace
+        for a in aspace
             obs = observation(pomdp, a, s)
             p = 0.0
-            for o in support(ospace)
+            for o in ospace
                 p += pdf(obs, o)
             end
             @assert isapprox(p, 1.0) "Observation probability does not sum to unity for state: ", s, " action: ", a
@@ -45,11 +45,11 @@ function trans_prob_consistency_check(pomdp::Union{MDP, POMDP})
     sspace = states(pomdp)
     aspace = actions(pomdp)
     # iterate through all s-a pairs
-    for s in support(sspace)
-        for a in support(aspace)
+    for s in sspace
+        for a in aspace
             tran = transition(pomdp, s, a)
             p = 0.0
-            for sp in support(sspace)
+            for sp in sspace
                 p += pdf(tran, sp)
             end
             @assert isapprox(p, 1.0) "Transition probability does not sum to unity for state: ", s, " action: ", a
