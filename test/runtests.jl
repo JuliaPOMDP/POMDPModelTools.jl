@@ -5,18 +5,38 @@ using Distributions
 using Random
 using Test
 
-include("test_ordered_spaces.jl")
-include("test_generative_belief_mdp.jl")
-include("test_implementations.jl")
-include("test_distributions_jl.jl")
-include("test_weighted_iteration.jl")
-include("test_sparse_cat.jl")
-include("test_bool.jl")
-include("test_info.jl")
-include("test_obs_weight.jl")
+@testset "ordered" begin
+    include("test_ordered_spaces.jl")
+end
+@testset "genbeliefmdp" begin
+    include("test_generative_belief_mdp.jl")
+end
+@testset "implement" begin
+    include("test_implementations.jl")
+end
+@testset "distribjl" begin
+    include("test_distributions_jl.jl")
+end
+@testset "weightediter" begin
+    include("test_weighted_iteration.jl")
+end
+@testset "sparsecat" begin
+    include("test_sparse_cat.jl")
+end
+@testset "bool" begin
+    include("test_bool.jl")
+end
+@testset "info" begin
+    include("test_info.jl")
+end
+@testset "obsweight" begin
+    include("test_obs_weight.jl")
+end
 
 # # following tests require DiscreteValueIteration
 # POMDPs.add("DiscreteValueIteration")
-# using DiscreteValueIteration
-# include("test_fully_observable_pomdp.jl")
-# include("test_underlying_mdp.jl")
+# @testset "visolve" begin
+#     using DiscreteValueIteration
+#     include("test_fully_observable_pomdp.jl")
+#     include("test_underlying_mdp.jl")
+# end
