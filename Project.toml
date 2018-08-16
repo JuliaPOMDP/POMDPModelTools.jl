@@ -1,6 +1,7 @@
 name = "POMDPModelTools"
 uuid = "ddee4e65-a780-5c57-ad17-2363fca24141"
 repo = "https://github.com/JuliaPOMDP/POMDPModelTools.jl.git"
+version = "0.0.0"
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
