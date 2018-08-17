@@ -40,7 +40,7 @@ let
 
     solver = RandomSolver(rng=rng)
     policy, sinfo = solve_info(solver, pomdp)
-    @test isa(sinfo, Nothing)
+    @test isa(sinfo, Missing)
 
     d = initialstate_distribution(pomdp)
     b = initialize_belief(up, d)
