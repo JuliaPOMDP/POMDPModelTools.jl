@@ -12,16 +12,14 @@ pdf(d::BoolDistribution, s::Bool) = s ? d.p : 1.0-d.p
 
 rand(rng::AbstractRNG, d::BoolDistribution) = rand(rng) <= d.p
 
-function Base.iterate(d::BoolDistribution, state::Integer=1)
-    if state == 1
-        return (true, 2) 
-    elseif state == 2 
-        return (false, 3)
+Base.iterate(d::BoolDistribution) = ((d.p, true), true)
+function Base.iterate(d::BoolDistribution, state::Bool)
+    if state
+        return  ((1.0 - d.p, false), false)
     else
         return nothing
     end
-end
-    
+end    
 
 support(d::BoolDistribution) = [true, false]
 
