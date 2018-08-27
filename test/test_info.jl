@@ -1,6 +1,4 @@
 mutable struct VoidUpdater <: Updater end
-# initialize_belief(::VoidUpdater, ::Any) = nothing
-# initialize_belief(::VoidUpdater, ::Any, ::Any) = nothing
 POMDPs.update(::VoidUpdater, ::B, ::Any, ::Any, b=nothing) where B = nothing
 
 mutable struct RandomPolicy{P <: Union{MDP, POMDP}} <: Policy
@@ -40,7 +38,7 @@ let
 
     solver = RandomSolver(rng=rng)
     policy, sinfo = solve_info(solver, pomdp)
-    @test isa(sinfo, Missing)
+    @test isa(sinfo, Nothing)
 
     d = initialstate_distribution(pomdp)
     b = initialize_belief(up, d)

@@ -1,6 +1,6 @@
 using POMDPModelTools
 using POMDPs
-using POMDPModels
+# using POMDPModels
 using Distributions
 using Random
 using Test
@@ -8,9 +8,11 @@ using Test
 @testset "ordered" begin
     include("test_ordered_spaces.jl")
 end
-@testset "genbeliefmdp" begin
-    include("test_generative_belief_mdp.jl")
-end
+
+## XXX Need POMDPModels
+# @testset "genbeliefmdp" begin
+#     include("test_generative_belief_mdp.jl")
+# end
 @testset "implement" begin
     include("test_implementations.jl")
 end
@@ -26,9 +28,11 @@ end
 @testset "bool" begin
     include("test_bool.jl")
 end
-@testset "info" begin
-    include("test_info.jl")
-end
+
+## XXX Need POMDPModels
+# @testset "info" begin
+#     include("test_info.jl")
+# end
 @testset "obsweight" begin
     include("test_obs_weight.jl")
 end
