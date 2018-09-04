@@ -28,6 +28,12 @@ end
 @testset "bool" begin
     include("test_bool.jl")
 end
+@testset "deterministic" begin
+    include("test_deterministic.jl")
+end
+@testset "terminalstate" begin
+    include("test_terminal_state.jl")
+end
 
 ## XXX Need POMDPModels
 # @testset "info" begin
