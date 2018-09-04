@@ -11,8 +11,9 @@ for problem modeling.
 
 This package requires [POMDPs.jl](https://github.com/JuliaPOMDP). To install this module run the following command:
 
-**TODO**
-
+```julia
+]add POMDPModelTools
+```
 
 ## Code structure
 
