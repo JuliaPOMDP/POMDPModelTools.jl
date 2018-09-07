@@ -31,6 +31,11 @@ export
     ordered_observations
 include("ordered_spaces.jl")
 
+export
+    TerminalState,
+    terminalstate
+include("terminal_state.jl")
+
 export GenerativeBeliefMDP
 include("generative_belief_mdp.jl")
 
@@ -63,6 +68,9 @@ export
     BoolDistribution
 include("distributions/bool.jl")
 
+export
+    Deterministic
+include("distributions/deterministic.jl")
 
 # convenient implementations
 include("convenient_implementations.jl")
