@@ -56,9 +56,10 @@ Example (note that the states of the belief MDP are beliefs):
 ```julia
 using POMDPModels
 using POMDPModelTools
+using BeliefUpdaters
 
 pomdp = BabyPOMDP()
-updater = BabyBeliefUpdater(pomdp)
+updater = DiscreteUpdater(pomdp)
 
 belief_mdp = GenerativeBeliefMDP(pomdp, updater)
 @show statetype(belief_mdp) # POMDPModels.BoolDistribution

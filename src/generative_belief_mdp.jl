@@ -1,6 +1,8 @@
-# Provides a structure for turning a pomdp and an updater into a generative belief MDP
-# maintained by @zsunberg
+"""
+    GenerativeBeliefMDP(pomdp, updater)
 
+Create a generative model of the belief MDP corresponding to POMDP `pomdp` with belief updates performed by `updater`.
+"""
 struct GenerativeBeliefMDP{P<:POMDP, U<:Updater, B, A} <: MDP{B, A}
     pomdp::P
     updater::U

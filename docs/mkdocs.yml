@@ -20,7 +20,4 @@ extra_javascript:
 
 docs_dir: 'build'
 
-# pages:
-#   - About: index.md
-#   - Distributions: distributions.md
-#   - Distribution Tools: distribution_tools.md
+# do NOT include pages - it will automatically discover them

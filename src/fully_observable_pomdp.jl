@@ -1,11 +1,12 @@
-# Provides a structure for turning a mdp into a pomdp where observations are the states of the original mdp
+"""
+    FullyObservablePOMDP(mdp)
 
+Turn `MDP` `mdp` into a `POMDP` where the observations are the states of the MDP.
+"""
 struct FullyObservablePOMDP{S, A} <: POMDP{S,A,S}
     mdp::MDP{S, A}
 end
 
-# observations are the state of the MDP
-# The observation distribution is modeled by a SparseCat distribution with only one element
 POMDPs.observations(pomdp::FullyObservablePOMDP) = states(pomdp.mdp)
 POMDPs.n_observations(pomdp::FullyObservablePOMDP) = n_states(pomdp.mdp)
 POMDPs.obsindex(pomdp::FullyObservablePOMDP{S, A}, o::S) where {S, A} = stateindex(pomdp.mdp, o)
@@ -19,11 +20,11 @@ function POMDPs.generate_o(pomdp::FullyObservablePOMDP, s, a, rng::AbstractRNG)
 end
 
 function POMDPs.observation(pomdp::FullyObservablePOMDP, s, a)
-    return SparseCat((s,), (1.,))
+    return Deterministic(s)
 end
 
 function POMDPs.observation(pomdp::FullyObservablePOMDP, s, a, sp)
-    return SparseCat((sp,), (1.,))
+    return Deterministic(sp)
 end
 
 POMDPs.isterminal_obs(problem::FullyObservablePOMDP{S,A}, o::S) where {S,A} = isterminal(pomdp.mdp, o)
