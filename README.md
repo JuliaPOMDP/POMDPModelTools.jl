@@ -11,7 +11,7 @@ Support tools for writing [POMDPs.jl](github.com/JuliaPOMDP/POMDPs.jl) models an
 This package requires [POMDPs.jl](https://github.com/JuliaPOMDP). To install this module run the following command:
 
 ```julia
-]add POMDPModelTools
+add POMDPModelTools
 ```
 
 ## Code structure
