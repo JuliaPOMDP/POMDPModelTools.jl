@@ -1,8 +1,8 @@
 using Documenter, POMDPModelTools
 
 makedocs(
-    format=:html,
-    sitename = "POMDPModelTools",
+    # format=:html,
+    # sitename = "POMDPModelTools",
     # pages = [
     #          "About" => "index.md",
     #          "Distributions"=>"distributions.md",
