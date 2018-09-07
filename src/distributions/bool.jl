@@ -1,8 +1,9 @@
 """
-    BoolDistribution
+    BoolDistribution(p_true)
 
-A distribution that provides the probabilities of true or false. 
-Can construct with `BoolDistribution(p_true)`.
+Create a distribution over Boolean values (`true` or `false`).
+
+`p_true` is the probability of the `true` outcome; the probability of `false` is 1-`p_true`.
 """
 struct BoolDistribution
     p::Float64 # probability of true

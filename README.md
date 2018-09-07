@@ -1,11 +1,9 @@
 # POMDPModelTools
 
 [![Build Status](https://travis-ci.org/JuliaPOMDP/POMDPModelTools.jl.svg?branch=master)](https://travis-ci.org/JuliaPOMDP/POMDPModelTools.jl)
-
 [![Coverage Status](https://coveralls.io/repos/github/JuliaPOMDP/POMDPModelTools.jl/badge.svg?branch=master)](https://coveralls.io/github/JuliaPOMDP/POMDPModelTools.jl?branch=master)
 
-Support tools for POMDPs.jl. This is a supported [JuliaPOMDP](https://github.com/JuliaPOMDP) package that provides tools
-for problem modeling.
+Support tools for writing [POMDPs.jl](github.com/JuliaPOMDP/POMDPs.jl) models and solvers.
 
 ## Installation
 
