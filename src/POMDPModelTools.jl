@@ -1,5 +1,3 @@
-__precompile__()
-
 module POMDPModelTools
 
 using POMDPs
@@ -74,12 +72,5 @@ include("distributions/deterministic.jl")
 
 # convenient implementations
 include("convenient_implementations.jl")
-
-# test utilities
-export 
-    probability_check,
-    obs_prob_consistency_check,
-    trans_prob_consistency_check
-include("model_test.jl")
 
 end # module
