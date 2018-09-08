@@ -6,7 +6,7 @@
 
 Support tools for writing [POMDPs.jl](github.com/JuliaPOMDP/POMDPs.jl) models and solvers.
 
-Please read the documentation here for a list of tools: [https://github.com/JuliaPOMDP/POMDPModelTools.jl/latest](https://github.com/JuliaPOMDP/POMDPModelTools.jl/latest)
+Please read the documentation here for a list of tools: [https://JuliaPOMDP.github.io/POMDPModelTools.jl/latest](https://JuliaPOMDP.github.io/POMDPModelTools.jl/latest)
 
 ## Installation
 
