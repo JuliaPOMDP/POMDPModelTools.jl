@@ -15,8 +15,8 @@ let
     @test observations(TestPOMDP()) == (true, false)
     @test n_observations(TestPOMDP()) == 2
 
-    @test state_index(TestMDP(), 1) == 1
-    @test action_index(TestMDP(), 2) == 2
-    @test obs_index(TestMDP(), 3) == 3
+    @test stateindex(TestMDP(), 1) == 1
+    @test actionindex(TestMDP(), 2) == 2
+    @test obsindex(TestMDP(), 3) == 3
 end
 

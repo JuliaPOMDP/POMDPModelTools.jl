@@ -1,8 +1,9 @@
 """
-    BoolDistribution
+    BoolDistribution(p_true)
 
-A distribution that provides the probabilities of true or false. 
-Can construct with `BoolDistribution(p_true)`.
+Create a distribution over Boolean values (`true` or `false`).
+
+`p_true` is the probability of the `true` outcome; the probability of `false` is 1-`p_true`.
 """
 struct BoolDistribution
     p::Float64 # probability of true
@@ -12,16 +13,14 @@ pdf(d::BoolDistribution, s::Bool) = s ? d.p : 1.0-d.p
 
 rand(rng::AbstractRNG, d::BoolDistribution) = rand(rng) <= d.p
 
-function Base.iterate(d::BoolDistribution, state::Integer=1)
-    if state == 1
-        return (true, 2) 
-    elseif state == 2 
-        return (false, 3)
+Base.iterate(d::BoolDistribution) = ((d.p, true), true)
+function Base.iterate(d::BoolDistribution, state::Bool)
+    if state
+        return  ((1.0 - d.p, false), false)
     else
         return nothing
     end
-end
-    
+end    
 
 support(d::BoolDistribution) = [true, false]
 

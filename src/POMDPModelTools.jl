@@ -3,9 +3,9 @@ module POMDPModelTools
 using POMDPs
 using Random
 
-import POMDPs: actions, n_actions, action_index
-import POMDPs: states, n_states, state_index
-import POMDPs: observations, n_observations, obs_index
+import POMDPs: actions, n_actions, actionindex
+import POMDPs: states, n_states, stateindex
+import POMDPs: observations, n_observations, obsindex
 import POMDPs: sampletype, generate_sr, initialstate, isterminal, discount
 # import POMDPs: Updater, update, initialize_belief, pdf, mode, updater
 import POMDPs: implemented
@@ -28,6 +28,11 @@ export
     ordered_actions,
     ordered_observations
 include("ordered_spaces.jl")
+
+export
+    TerminalState,
+    terminalstate
+include("terminal_state.jl")
 
 export GenerativeBeliefMDP
 include("generative_belief_mdp.jl")
@@ -61,6 +66,9 @@ export
     BoolDistribution
 include("distributions/bool.jl")
 
+export
+    Deterministic
+include("distributions/deterministic.jl")
 
 # convenient implementations
 include("convenient_implementations.jl")

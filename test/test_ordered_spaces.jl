@@ -1,7 +1,11 @@
 let
-    pomdp = TigerPOMDP()
+    struct TigerPOMDPTestFixture <: POMDP{Bool, Int, Bool} end
 
-    probability_check(pomdp)
+    POMDPs.actions(m::TigerPOMDPTestFixture) = 0:2
+    POMDPs.n_actions(m::TigerPOMDPTestFixture) = 3
+    POMDPs.actionindex(m::TigerPOMDPTestFixture, s::Int) = s+1
+
+    pomdp = TigerPOMDPTestFixture()
 
     @test ordered_states(pomdp) == [false, true]
     @test ordered_observations(pomdp) == [false, true]

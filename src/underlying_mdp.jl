@@ -1,5 +1,8 @@
-# provide a structure to extract the underlying MDP of a POMDP
+"""
+    UnderlyingMDP(pomdp)
 
+Transform `POMDP` `pomdp` into an `MDP` where the states are fully observed.
+"""
 struct UnderlyingMDP{P <: POMDP, S, A} <: MDP{S, A}
     pomdp::P
 end
@@ -22,9 +25,9 @@ POMDPs.isterminal(mdp ::UnderlyingMDP{P, S, A}, s::S) where {P,S,A} = isterminal
 POMDPs.discount(mdp::UnderlyingMDP) = discount(mdp.pomdp)
 POMDPs.n_actions(mdp::UnderlyingMDP) = n_actions(mdp.pomdp)
 POMDPs.n_states(mdp::UnderlyingMDP) = n_states(mdp.pomdp)
-POMDPs.state_index(mdp::UnderlyingMDP{P, S, A}, s::S) where {P,S,A} = state_index(mdp.pomdp, s)
-POMDPs.state_index(mdp::UnderlyingMDP{P, Int, A}, s::Int) where {P,A} = state_index(mdp.pomdp, s) # fix ambiguity with src/convenience
-POMDPs.state_index(mdp::UnderlyingMDP{P, Bool, A}, s::Bool) where {P,A} = state_index(mdp.pomdp, s)
-POMDPs.action_index(mdp::UnderlyingMDP{P, S, A}, a::A) where {P,S,A} = action_index(mdp.pomdp, a)
-POMDPs.action_index(mdp::UnderlyingMDP{P,S, Int}, a::Int) where {P,S} = action_index(mdp.pomdp, a)
-POMDPs.action_index(mdp::UnderlyingMDP{P,S, Bool}, a::Bool) where {P,S} = action_index(mdp.pomdp, a)
+POMDPs.stateindex(mdp::UnderlyingMDP{P, S, A}, s::S) where {P,S,A} = stateindex(mdp.pomdp, s)
+POMDPs.stateindex(mdp::UnderlyingMDP{P, Int, A}, s::Int) where {P,A} = stateindex(mdp.pomdp, s) # fix ambiguity with src/convenience
+POMDPs.stateindex(mdp::UnderlyingMDP{P, Bool, A}, s::Bool) where {P,A} = stateindex(mdp.pomdp, s)
+POMDPs.actionindex(mdp::UnderlyingMDP{P, S, A}, a::A) where {P,S,A} = actionindex(mdp.pomdp, a)
+POMDPs.actionindex(mdp::UnderlyingMDP{P,S, Int}, a::Int) where {P,S} = actionindex(mdp.pomdp, a)
+POMDPs.actionindex(mdp::UnderlyingMDP{P,S, Bool}, a::Bool) where {P,S} = actionindex(mdp.pomdp, a)
