@@ -1,7 +1,7 @@
 """
     UnderlyingMDP(pomdp)
 
-Transform `POMDP` `pomdp` into an 'MDP' where the states are fully observed.
+Transform `POMDP` `pomdp` into an `MDP` where the states are fully observed.
 """
 struct UnderlyingMDP{P <: POMDP, S, A} <: MDP{S, A}
     pomdp::P
