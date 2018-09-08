@@ -13,4 +13,4 @@ julia> actions(BoolMDP())
 (true, false)
 ```
 
-For a complete list of default implementations, see [convenient_implementations.jl](https://github.com/JuliaPOMDP/POMDPModelTools.jl/blob/master/src/convenient_implementations.jl).
+For a complete list of default implementations, see [convenient_implementations.jl](https://github.com/JuliaPOMDP/POMDPModelTools.jl/blob/master/src/convenient_implementations.jl) and [distributions_jl.jl](https://github.com/JuliaPOMDP/POMDPModelTools.jl/blob/master/src/distributions/distributions_jl.jl).
