@@ -30,7 +30,7 @@ function rand(rng::AbstractRNG, d::SparseCat)
               probs = $(d.probs)
               """)
     end
-    error("Error sampling from SparseCat distribution with vals $(d.vals) and probs $(d.probs)") # for type stability
+    error("Error sampling from SparseCat distribution with vals $(d.vals) and probs $(d.probs)") # try to help with type stability
 end
 
 # slow linear search :(
@@ -59,6 +59,7 @@ support(d::SparseCat) = d.vals
 weighted_iterator(d::SparseCat) = d
 
 # iterator for general SparseCat
+# this has some type stability problems
 function Base.iterate(d::SparseCat)
     val, vstate = iterate(d.vals)
     prob, pstate = iterate(d.probs)
@@ -66,16 +67,20 @@ function Base.iterate(d::SparseCat)
 end
 function Base.iterate(d::SparseCat, dstate::Tuple)
     vstate, pstate = dstate
-    val, vstate_next = iterate(d.vals, vstate)
-    prob, pstate_next = iterate(d.probs, pstate)
-    if vstate_next == nothing
+    vnext = iterate(d.vals, vstate)
+    pnext = iterate(d.probs, pstate)
+    if vnext == nothing || pnext == nothing
         return nothing 
     end
+    val, vstate_next = vnext
+    prob, pstate_next = pnext
     return ((val=>prob), (vstate_next, pstate_next))
 end
 
-# iterator for SparseCat with AbstractArrays
-function Base.iterate(d::SparseCat{V,P}, state::Integer=1) where {V<:AbstractArray, P<:AbstractArray}
+# iterator for SparseCat with indexed members
+const Indexed = Union{AbstractArray, Tuple, NamedTuple}
+
+function Base.iterate(d::SparseCat{V,P}, state::Integer=1) where {V<:Indexed, P<:Indexed}
     if state > length(d)
         return nothing 
     end

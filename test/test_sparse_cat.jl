@@ -9,6 +9,16 @@ let
     @test sampletype(typeof(d)) == Symbol
     @inferred rand(Random.GLOBAL_RNG, d)
 
+    dt = SparseCat((:a, :b, :d), (0.4, 0.5, 0.1))
+    c = collect(weighted_iterator(dt))
+    @test c == [:a=>0.4, :b=>0.5, :d=>0.1]
+    @test pdf(dt, :c) == 0.0
+    @test pdf(dt, :a) == 0.4
+    @test mode(dt) == :b
+    @test sampletype(dt) == Symbol
+    @test sampletype(typeof(dt)) == Symbol
+    @inferred rand(Random.GLOBAL_RNG, dt)
+
     rng = MersenneTwister(14)
     samples = Symbol[]
     N = 100_000
