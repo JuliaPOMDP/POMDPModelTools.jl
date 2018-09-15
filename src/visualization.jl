@@ -21,28 +21,32 @@ to one transition in a simulation. It may have the following fields:
 - `ai`: info from the policy decision
 - `ui`: info from the belief update
 
+Keyword arguments are reserved for the problem implementer and can be used to control appearance, etc.
+
 # Important Notes
 - `step` may not contain all of the elements listed above, so `render` should
 check for them and render only what is available
 - `o` typically corresponds to `sp`, so it is often be clearer for POMDPs to
 render `sp` rather than `s`.
 """
-function render(m::Union{MDP,POMDP}, step)
-    @warn("No implementation of POMDPModelTools.render(m::$(typeof(m)), step) found. Falling back to text default.")
-    io = IOBuffer()
-    ioc = IOContext(io, :short=>true)
-    try
-        for (k, v) in pairs(step)
-            print(ioc, k)
-            print(ioc, ": ")
-            show(ioc, v)
-            println(ioc)
-        end
-    finally
-        println(ioc, """
+@generated function render(m::Union{MDP,POMDP}, step)
+    Core.println("WARNING: No implementation of POMDPModelTools.render(m::$m, step) found. Falling back to text default.")
+    return quote
+        io = IOBuffer()
+        ioc = IOContext(io, :short=>true)
+        try
+            for (k, v) in pairs(step)
+                print(ioc, k)
+                print(ioc, ": ")
+                show(ioc, v)
+                println(ioc)
+            end
+        finally
+            println(ioc, """
 
-            Please implement POMDPModelTools.render(m::$(typeof(m)), step) to enable visualization.
-            """)
+                Please implement POMDPModelTools.render(m::$(typeof(m)), step) to enable visualization.
+                """)
+        end
+        return String(take!(io))
     end
-    return String(take!(io))
 end
