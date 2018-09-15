@@ -1,9 +1,10 @@
 using POMDPModelTools
 using POMDPs
-# using POMDPModels
+using POMDPModels
 using Distributions
 using Random
 using Test
+using POMDPSimulators
 
 @testset "ordered" begin
     include("test_ordered_spaces.jl")
@@ -50,3 +51,7 @@ end
 #     include("test_fully_observable_pomdp.jl")
 #     include("test_underlying_mdp.jl")
 # end
+
+@testset "vis" begin
+    include("test_visualization.jl")
+end

@@ -14,6 +14,10 @@ import Random: rand, rand!
 import Statistics: mean
 import Base: ==
 
+export
+    render
+include("visualization.jl")
+
 # info interface
 export
     generate_sri,
