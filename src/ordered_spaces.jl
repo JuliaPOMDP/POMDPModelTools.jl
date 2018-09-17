@@ -27,10 +27,10 @@ Return an `AbstractVector` of observations ordered according to `obsindex(pomdp,
 """
 ordered_observations(pomdp::POMDP) = ordered_vector(obstype(typeof(pomdp)), o->obsindex(pomdp,o), observations(pomdp), n_observations(pomdp), "observation")
 
-function ordered_vector(T::Type, index::Function, support, len, singular, plural=singular*"s")
+function ordered_vector(T::Type, index::Function, space, len, singular, plural=singular*"s")
     a = Array{T}(undef, len)
     gotten = falses(len)
-    for x in support
+    for x in space
         id = index(x)
         if id > len || id < 1
             error("""
@@ -51,7 +51,7 @@ function ordered_vector(T::Type, index::Function, support, len, singular, plural
 
              n_$plural(...) was $len.
 
-             $plural corresponding to the following indices were missing from support($plural(...)): $missing
+             $plural corresponding to the following indices were missing from $plural(...): $missing
              """
     end
     return a
