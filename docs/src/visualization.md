@@ -2,7 +2,7 @@
 
 POMDPModelTools contains a basic visualization interface consisting of the `render` function.
 
-Problem writers should implement a method of this function so that their problem can be visualized in a variety of contexts including jupyter notebooks, 
+Problem writers should implement a method of this function so that their problem can be visualized in a variety of contexts including jupyter notebooks, web browsers, or saved as images or animations.
 
 ```@docs
 render
