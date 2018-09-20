@@ -11,9 +11,9 @@ let
     @test s_mdp == s_pomdp
 
     solver = ValueIterationSolver(max_iterations = 100)
-    mdp_policy = solve(solver, mdp, verbose=false)
-    pomdp_policy = solve(solver, pomdp, verbose=false)
+    mdp_policy = solve(solver, mdp)
+    pomdp_policy = solve(solver, pomdp)
     @test mdp_policy.util == pomdp_policy.util
 
-    action_index(mdp, 1)
+    actionindex(mdp, 1)
 end

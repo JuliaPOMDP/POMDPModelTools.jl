@@ -5,7 +5,7 @@ let
 
     @test observations(pomdp) == states(pomdp)
     @test n_observations(pomdp) == n_states(pomdp)
-    @test state_type(pomdp) == obs_type(pomdp)
+    @test statetype(pomdp) == obstype(pomdp)
 
     @test observations(pomdp) == states(pomdp)
     @test n_observations(pomdp) == n_states(pomdp)
@@ -16,7 +16,7 @@ let
     @test s_po == s_mdp
 
     solver = ValueIterationSolver(max_iterations = 100)
-    mdp_policy = solve(solver, mdp, verbose=false)
-    pomdp_policy = solve(solver, pomdp, verbose=false)
+    mdp_policy = solve(solver, mdp)
+    pomdp_policy = solve(solver, pomdp)
     @test mdp_policy.util == pomdp_policy.util
 end
