@@ -1,9 +1,17 @@
 using Documenter, POMDPModelTools
 
-makedocs()
+makedocs(
+    modules = [BeliefUpdaters],
+    format = :html,
+    sitename = "POMDPModelTools.jl"
+)
 
 deploydocs(
-           deps = Deps.pip("mkdocs"),
-           repo = "github.com/JuliaPOMDP/POMDPModelTools.jl",
-           julia = "1.0"
-          )
+    repo = "github.com/JuliaPOMDP/POMDPModelTools.jl.git",
+    julia = "1.0",
+    osname = "linux",
+    target = "build",
+    deps = nothing,
+    make = nothing
+)
+
