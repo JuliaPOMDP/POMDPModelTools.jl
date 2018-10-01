@@ -24,10 +24,8 @@ to one transition in a simulation. It may have the following fields:
 Keyword arguments are reserved for the problem implementer and can be used to control appearance, etc.
 
 # Important Notes
-- `step` may not contain all of the elements listed above, so `render` should
-check for them and render only what is available
-- `o` typically corresponds to `sp`, so it is often be clearer for POMDPs to
-render `sp` rather than `s`.
+- `step` may not contain all of the elements listed above, so `render` should check for them and render only what is available
+- `o` typically corresponds to `sp`, so it is often clearer for POMDPs to render `sp` rather than `s`.
 """
 @generated function render(m::Union{MDP,POMDP}, step)
     Core.println("WARNING: No implementation of POMDPModelTools.render(m::$m, step) found. Falling back to text default.")
