@@ -27,8 +27,6 @@ function POMDPs.observation(pomdp::FullyObservablePOMDP, s, a, sp)
     return Deterministic(sp)
 end
 
-POMDPs.isterminal_obs(problem::FullyObservablePOMDP{S,A}, o::S) where {S,A} = isterminal(pomdp.mdp, o)
-
 # inherit other function from the MDP type
 
 POMDPs.states(pomdp::FullyObservablePOMDP) = states(pomdp.mdp)
