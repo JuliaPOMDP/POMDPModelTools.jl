@@ -2,9 +2,7 @@
 # maintained by Zach Sunberg
 
 actions(mdp::MDP{S,Bool}) where S = (true, false)
-actions(mdp::MDP{S,Bool}, s::S, t::Tuple{Bool,Bool}=(true,false)) where S = (true,false)
 actions(mdp::POMDP{S,Bool,O}) where {S,O} = (true, false)
-actions(mdp::POMDP{S,Bool,O}, s::S, t::Tuple{Bool,Bool}=(true,false)) where {S,O} = (true,false)
 n_actions(mdp::MDP{S,Bool}) where S = 2
 n_actions(mdp::POMDP{S,Bool,O}) where {S, O} = 2
 
