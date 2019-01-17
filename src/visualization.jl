@@ -48,3 +48,5 @@ Keyword arguments are reserved for the problem implementer and can be used to co
         return String(take!(io))
     end
 end
+
+render(m::Union{MDP, POMDP}) = render(m, NamedTuple())
