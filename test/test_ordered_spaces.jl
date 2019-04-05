@@ -29,5 +29,4 @@ POMDPs.states(::TM2) = [1,3]
 POMDPs.n_states(::TM2) = 3
 POMDPs.stateindex(::TM2, s::Int) = s
 
-println("There should be a warning below:")
-ordered_states(TM2())
+@test_logs (:warn,) ordered_states(TM2())
