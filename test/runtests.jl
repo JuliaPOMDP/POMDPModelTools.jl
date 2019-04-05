@@ -1,7 +1,6 @@
 using POMDPModelTools
 using POMDPs
 using POMDPModels
-using Distributions
 using Random
 using Test
 using Pkg
@@ -17,9 +16,6 @@ end
 end
 @testset "implement" begin
     include("test_implementations.jl")
-end
-@testset "distribjl" begin
-    include("test_distributions_jl.jl")
 end
 @testset "weightediter" begin
     include("test_weighted_iteration.jl")
