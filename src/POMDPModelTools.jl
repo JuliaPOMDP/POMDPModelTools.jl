@@ -55,9 +55,6 @@ export
     obs_prob_consistency_check,
     trans_prob_consistency_check
 
-# tools for distributions
-include("distributions/distributions_jl.jl")
-
 export
     weighted_iterator
 include("distributions/weighted_iteration.jl")
