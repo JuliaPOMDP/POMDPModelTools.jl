@@ -2,7 +2,7 @@
 # maintained by @zsunberg
 
 """
-Return a tuple containing the next state and reward and information (usually a `Dict` or `nothing`) from that step.
+Return a tuple containing the next state and reward and information (usually a `NamedTuple`, `Dict` or `nothing`) from that step.
 
 By default, returns `nothing` as info.
 """
@@ -11,7 +11,7 @@ function generate_sri(p::MDP, s, a, rng::AbstractRNG)
 end
 
 """
-Return a tuple containing the next state, observation, and reward and information (usually a `Dict` or `nothing`) from that step.
+Return a tuple containing the next state, observation, and reward and information (usually a `NamedTuple`, `Dict` or `nothing`) from that step.
 
 By default, returns `nothing` as info. 
 """
@@ -22,7 +22,7 @@ end
 """
     a, ai = action_info(policy, x)
 
-Return a tuple containing the action determined by policy 'p' at state or belief 'x' and information (usually a `Dict` or `nothing`) from the calculation of that action.
+Return a tuple containing the action determined by policy 'p' at state or belief 'x' and information (usually a `NamedTuple`, `Dict` or `nothing`) from the calculation of that action.
 
 By default, returns `nothing` as info.
 """
@@ -33,7 +33,7 @@ end
 """
     policy, si = solve_info(solver, problem)
 
-Return a tuple containing the policy determined by a solver and information (usually a `Dict` or `nothing`) from the calculation of that policy.
+Return a tuple containing the policy determined by a solver and information (usually a `NamedTuple`, `Dict` or `nothing`) from the calculation of that policy.
 
 By default, returns `nothing` as info.
 """
@@ -44,7 +44,7 @@ end
 """
     bp, i = update_info(updater, b, a, o)
 
-Return a tuple containing the new belief and information (usually a `Dict` or `nothing`) from the belief update.
+Return a tuple containing the new belief and information (usually a `NamedTuple`, `Dict` or `nothing`) from the belief update.
 
 By default, returns `nothing` as info.
 """
