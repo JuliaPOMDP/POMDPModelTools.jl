@@ -10,7 +10,7 @@
 
 !!! warning
     
-    WARNING: Early tests suggest that the Julia 1.0 compiler will not be able to efficiently implement union splitting in cases as  complex as POMDPs, so using a `Union` for the state type of a problem can currently have a large overhead.
+    WARNING: Early tests (August 2018) suggest that the Julia 1.0 compiler will not be able to efficiently implement union splitting in cases as  complex as POMDPs, so using a `Union` for the state type of a problem can currently have a large overhead.
 
 
 ```@docs
