@@ -16,4 +16,8 @@ let
     @test mdp_policy.util == pomdp_policy.util
 
     actionindex(mdp, 1)
+
+    # test mdp passthrough
+    m = SimpleGridWorld()
+    @test UnderlyingMDP(m) === m
 end

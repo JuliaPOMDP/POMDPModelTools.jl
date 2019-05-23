@@ -1,7 +1,11 @@
 """
-    UnderlyingMDP(pomdp)
+    UnderlyingMDP(m::POMDP)
 
-Transform `POMDP` `pomdp` into an `MDP` where the states are fully observed.
+Transform `POMDP` `m` into an `MDP` where the states are fully observed.
+
+    UnderlyingMDP(m::MDP)  
+
+Return `m`
 """
 struct UnderlyingMDP{P <: POMDP, S, A} <: MDP{S, A}
     pomdp::P
@@ -11,6 +15,8 @@ function UnderlyingMDP(pomdp::POMDP{S, A, O}) where {S,A,O}
     P = typeof(pomdp)
     return UnderlyingMDP{P,S,A}(pomdp)
 end
+
+UnderlyingMDP(m::MDP) = m
 
 POMDPs.transition(mdp::UnderlyingMDP{P, S, A}, s::S, a::A) where {P,S,A}= transition(mdp.pomdp, s, a)
 POMDPs.initialstate_distribution(mdp::UnderlyingMDP) = initialstate_distribution(mdp.pomdp)
