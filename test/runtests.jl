@@ -5,6 +5,7 @@ using Random
 using Test
 using Pkg
 using POMDPSimulators
+using POMDPPolicies
 
 @testset "ordered" begin
     include("test_ordered_spaces.jl")
@@ -52,4 +53,8 @@ end
 
 @testset "vis" begin
     include("test_visualization.jl")
+end
+
+@testset "evaluation" begin
+    include("test_evaluation.jl")
 end

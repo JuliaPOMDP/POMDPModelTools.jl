@@ -22,7 +22,7 @@ POMDPs.solve(solver::RandomSolver, problem::P) where {P<:Union{POMDP,MDP}} = Ran
 let
     rng = MersenneTwister(7)
 
-    mdp = GridWorld()
+    mdp = LegacyGridWorld()
     s = initialstate(mdp, rng)
     a = rand(rng, actions(mdp))
     @inferred generate_sri(mdp, s, a, rng)
