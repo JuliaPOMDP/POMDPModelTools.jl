@@ -23,7 +23,7 @@ Returns a DiscreteValueFunction, which maps states to values.
 using POMDPModelTools, POMDPPolicies, POMDPModels
 m = SimpleGridWorld()
 u = evaluate(m, FunctionPolicy(x->:left))
-u(first(states(m))) # value of always moving left
+u([1,1]) # value of always moving left starting at state [1,1]
 ```
 """
 function evaluate(m::MDP, p::Policy; rewardfunction=POMDPs.reward)
