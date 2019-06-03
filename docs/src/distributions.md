@@ -23,3 +23,9 @@ BoolDistribution
 ```@docs
 Deterministic
 ```
+
+## Uniform
+
+```@docs
+Uniform
+```

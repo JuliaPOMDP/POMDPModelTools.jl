@@ -71,6 +71,10 @@ export
     Deterministic
 include("distributions/deterministic.jl")
 
+export
+    Uniform
+include("distributions/uniform.jl")
+
 # convenient implementations
 include("convenient_implementations.jl")
 

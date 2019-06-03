@@ -5,6 +5,7 @@ using Random
 using Test
 using Pkg
 using POMDPSimulators
+import Distributions.Categorical
 
 @testset "ordered" begin
     include("test_ordered_spaces.jl")
@@ -28,6 +29,9 @@ end
 end
 @testset "deterministic" begin
     include("test_deterministic.jl")
+end
+@testset "uniform" begin
+    include("test_uniform.jl")
 end
 @testset "terminalstate" begin
     include("test_terminal_state.jl")
