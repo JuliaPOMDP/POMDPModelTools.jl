@@ -2,12 +2,13 @@ module POMDPModelTools
 
 using POMDPs
 using Random
+using LinearAlgebra
+using SparseArrays
 
 import POMDPs: actions, n_actions, actionindex
 import POMDPs: states, n_states, stateindex
 import POMDPs: observations, n_observations, obsindex
 import POMDPs: sampletype, generate_sr, initialstate, isterminal, discount
-# import POMDPs: Updater, update, initialize_belief, pdf, mode, updater
 import POMDPs: implemented
 import Distributions: pdf, mode, mean, support
 import Random: rand, rand!
@@ -77,5 +78,9 @@ include("distributions/uniform.jl")
 
 # convenient implementations
 include("convenient_implementations.jl")
+
+export
+    evaluate
+include("policy_evaluation.jl")
 
 end # module
