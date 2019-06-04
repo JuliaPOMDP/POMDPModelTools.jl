@@ -22,8 +22,7 @@ function Uniform(c)
     return Uniform(set)
 end
 
-rand(rng::AbstractRNG, d::Uniform) = rand(rng, d.set)
-
+# rand(rng::AbstractRNG, d::Uniform) = rand(rng, d.set)
 support(d::Uniform) = d.set
 sampletype(::Type{Uniform{T}}) where T = eltype(T)
 
@@ -35,13 +34,13 @@ function pdf(d::Uniform, s)
     end
 end
 
-mean(d::Uniform) = mean(d.set)
-mode(d::Uniform) = mode(d.set)
-
-function weighted_iterator(d::Uniform)
-    p = 1.0/length(d.set)
-    return (x=>p for x in d.set)
-end
+# mean(d::Uniform) = mean(d.set)
+# mode(d::Uniform) = mode(d.set)
+# 
+# function weighted_iterator(d::Uniform)
+#     p = 1.0/length(d.set)
+#     return (x=>p for x in d.set)
+# end
 
 """
     UnsafeUniform(collection)
@@ -54,17 +53,18 @@ struct UnsafeUniform{T}
     collection::T
 end
 
-rand(rng::AbstractRNG, d::UnsafeUniform) = rand(rng, d.collection)
-
+pdf(d::UnsafeUniform, s) = 1.0/length(d.collection)
 support(d::UnsafeUniform) = d.collection
 sampletype(::Type{UnsafeUniform{T}}) where T = eltype(T)
 
-pdf(d::UnsafeUniform, s) = 1.0/length(d.collection)
+# common
+const Unif = Union{Uniform,UnsafeUniform}
 
-mean(d::UnsafeUniform) = mean(d.collection)
-mode(d::UnsafeUniform) = mode(d.collection)
+rand(rng::AbstractRNG, d::Unif) = rand(rng, support(d))
+mean(d::Unif) = mean(support(d))
+mode(d::Unif) = mode(support(d))
 
-function weighted_iterator(d::UnsafeUniform)
-    p = 1.0/length(d.collection)
-    return (x=>p for x in d.collection)
+function weighted_iterator(d::Unif)
+    p = 1.0/length(support(d))
+    return (x=>p for x in support(d))
 end
