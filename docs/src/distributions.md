@@ -28,4 +28,5 @@ Deterministic
 
 ```@docs
 Uniform
+UnsafeUniform
 ```

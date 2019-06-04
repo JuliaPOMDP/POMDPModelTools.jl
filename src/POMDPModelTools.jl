@@ -73,7 +73,8 @@ export
 include("distributions/deterministic.jl")
 
 export
-    Uniform
+    Uniform,
+    UnsafeUniform
 include("distributions/uniform.jl")
 
 # convenient implementations

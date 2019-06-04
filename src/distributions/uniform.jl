@@ -1,35 +1,70 @@
+struct Uniform{T<:AbstractSet}
+    set::T
+end
+
 """
     Uniform(collection)
 
-Create a categorical distribution over a collection of objects.
+Create a uniform categorical distribution over a collection of objects.
+
+The objects in the collection must be unique (this is tested on construction), and will be stored in a `Set`. To avoid this overhead, use `UnsafeUniform`.
 """
-mutable struct Uniform{C, T}
-    collection::C
-    _set::Union{Set{T}, Nothing} # keep track of what's in the collection to make pdf more efficient
+function Uniform(c)
+    set = Set(c)
+    if length(c) > length(set)
+        error("""
+              Error constructing Uniform($c).
+
+              Objects must be unique (that is, length(Set(c)) == length(c)).
+              """
+             )
+    end
+    return Uniform(set)
 end
 
-Uniform(c) = Uniform{typeof(c), eltype(c)}(c, nothing)
-Uniform(c::Set) = Uniform{typeof(c), eltype(c)}(c, c)
+rand(rng::AbstractRNG, d::Uniform) = rand(rng, d.set)
 
-rand(rng::AbstractRNG, d::Uniform) = rand(rng, d.collection)
-rand(rng::AbstractRNG, d::Uniform{<:NamedTuple}) = d.collection[rand(rng, 1:length(d.collection))]
-
-support(d::Uniform) = d.collection
-sampletype(::Type{Uniform{C, T}}) where {C,T} = T
+support(d::Uniform) = d.set
+sampletype(::Type{Uniform{T}}) where T = eltype(T)
 
 function pdf(d::Uniform, s)
-    d._set = something(d._set, Set(d.collection))
-    if s in d._set
-        return 1/length(d.collection)
+    if s in d.set
+        return 1.0/length(d.set)
     else
         return 0.0
     end
 end
 
-mode(d::Uniform) = mode(d.collection)
-mean(d::Uniform) = mean(d.collection)
+mean(d::Uniform) = mean(d.set)
+mode(d::Uniform) = mode(d.set)
 
 function weighted_iterator(d::Uniform)
-    p = 1/length(d.collection)
+    p = 1.0/length(d.set)
+    return (x=>p for x in d.set)
+end
+
+"""
+    UnsafeUniform(collection)
+
+Create a uniform categorical distribution over a collection of objects.
+
+No checks are performed to ensure uniqueness or check whether an object is actually in the set when evaluating the pdf.
+"""
+struct UnsafeUniform{T}
+    collection::T
+end
+
+rand(rng::AbstractRNG, d::UnsafeUniform) = rand(rng, d.collection)
+
+support(d::UnsafeUniform) = d.collection
+sampletype(::Type{UnsafeUniform{T}}) where T = eltype(T)
+
+pdf(d::UnsafeUniform, s) = 1.0/length(d.collection)
+
+mean(d::UnsafeUniform) = mean(d.collection)
+mode(d::UnsafeUniform) = mode(d.collection)
+
+function weighted_iterator(d::UnsafeUniform)
+    p = 1.0/length(d.collection)
     return (x=>p for x in d.collection)
 end
