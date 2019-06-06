@@ -22,7 +22,6 @@ function Uniform(c)
     return Uniform(set)
 end
 
-# rand(rng::AbstractRNG, d::Uniform) = rand(rng, d.set)
 support(d::Uniform) = d.set
 sampletype(::Type{Uniform{T}}) where T = eltype(T)
 
@@ -33,14 +32,6 @@ function pdf(d::Uniform, s)
         return 0.0
     end
 end
-
-# mean(d::Uniform) = mean(d.set)
-# mode(d::Uniform) = mode(d.set)
-# 
-# function weighted_iterator(d::Uniform)
-#     p = 1.0/length(d.set)
-#     return (x=>p for x in d.set)
-# end
 
 """
     UnsafeUniform(collection)
@@ -57,7 +48,8 @@ pdf(d::UnsafeUniform, s) = 1.0/length(d.collection)
 support(d::UnsafeUniform) = d.collection
 sampletype(::Type{UnsafeUniform{T}}) where T = eltype(T)
 
-# common
+# Common Implementations
+
 const Unif = Union{Uniform,UnsafeUniform}
 
 rand(rng::AbstractRNG, d::Unif) = rand(rng, support(d))
