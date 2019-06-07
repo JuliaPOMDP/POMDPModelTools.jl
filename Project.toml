@@ -1,7 +1,7 @@
 name = "POMDPModelTools"
 uuid = "ae0c9e01-735e-4c3f-9064-59fe796068c2"
 authors = ["JuliaPOMDP Contributors"]
-version = "0.1.0"
+version = "0.1.6"
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
