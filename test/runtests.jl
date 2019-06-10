@@ -62,3 +62,7 @@ end
 @testset "evaluation" begin
     include("test_evaluation.jl")
 end
+
+@testset "pretty printing" begin
+    include("test_pretty_printing.jl")
+end

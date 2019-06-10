@@ -4,6 +4,7 @@ using POMDPs
 using Random
 using LinearAlgebra
 using SparseArrays
+using UnicodePlots
 
 import POMDPs: actions, n_actions, actionindex
 import POMDPs: states, n_states, stateindex
@@ -83,5 +84,9 @@ include("convenient_implementations.jl")
 export
     evaluate
 include("policy_evaluation.jl")
+
+export
+    showdistribution
+include("distributions/pretty_printing.jl")
 
 end # module

@@ -31,4 +31,6 @@ let
     @test isapprox(count(samples.==:d)/N, pdf(d,:d), atol=0.005)
 
     @test_throws ErrorException rand(Random.GLOBAL_RNG, SparseCat([1], [0.0]))
+
+    @test sprint((io,d)->show(io,MIME("text/plain"),d), d) == sprint((io,d)->showdistribution(io,d,title="SparseCat distribution"), d)
 end

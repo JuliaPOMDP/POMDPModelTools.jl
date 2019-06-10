@@ -33,6 +33,8 @@ function pdf(d::Uniform, s)
     end
 end
 
+Base.show(io::IO, m::MIME"text/plain", d::Uniform) = showdistribution(io, m, d, title="Uniform distribution")
+
 """
     UnsafeUniform(collection)
 
@@ -60,3 +62,5 @@ function weighted_iterator(d::Unif)
     p = 1.0/length(support(d))
     return (x=>p for x in support(d))
 end
+
+Base.show(io::IO, m::MIME"text/plain", d::UnsafeUniform) = showdistribution(io, m, d, title="UnsafeUniform distribution")

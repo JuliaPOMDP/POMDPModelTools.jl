@@ -2,6 +2,8 @@
 
 POMDPModelTools contains several utility distributions to be used in the POMDPs `transition` and `observation` functions. These implement the appropriate methods of the functions in the [distributions interface](http://juliapomdp.github.io/POMDPs.jl/latest/interfaces/#distributions).
 
+This package also supplies [`showdistribution`](@ref) for pretty printing distributions as unicode bar graphs to the terminal.
+
 ## Sparse Categorical (`SparseCat`)
 
 `SparseCat` is a sparse categorical distribution which is specified by simply providing a list of possible values (states or observations) and the probabilities corresponding to those particular objects.
@@ -29,4 +31,9 @@ Deterministic
 ```@docs
 Uniform
 UnsafeUniform
+```
+
+## Pretty Printing
+```@docs
+showdistribution
 ```
