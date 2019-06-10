@@ -12,6 +12,8 @@ d = Uniform([1])
 @test typeof(mean(d)) == typeof(mean([1]))
 @test collect(weighted_iterator(d)) == [1=>1.0]
 
+@test sprint((io,d)->show(io,MIME("text/plain"),d), d) == sprint((io,d)->showdistribution(io,d,title="Uniform distribution"), d)
+
 d2 = Uniform((:symbol,))
 @test rand(d2) == :symbol
 @test rand(MersenneTwister(4), d2) == :symbol
@@ -26,6 +28,8 @@ d2 = Uniform((:symbol,))
 # uniqueness test
 @test_throws ErrorException Uniform((:symbol, :symbol))
 
+
+
 d3 = UnsafeUniform([1])
 
 @test rand(d3) == 1
@@ -38,6 +42,8 @@ d3 = UnsafeUniform([1])
 @test mode(d3) == 1
 @test typeof(mean(d3)) == typeof(mean([1]))
 @test collect(weighted_iterator(d3)) == [1=>1.0]
+
+@test sprint((io,d3)->show(io,MIME("text/plain"),d3), d3) == sprint((io,d3)->showdistribution(io,d3,title="UnsafeUniform distribution"), d3)
 
 d4 = UnsafeUniform((:symbol,))
 @test rand(d4) == :symbol

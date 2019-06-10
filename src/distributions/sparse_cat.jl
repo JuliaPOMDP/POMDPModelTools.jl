@@ -110,3 +110,5 @@ function mode(d::SparseCat)
     end
     return bestv
 end
+
+Base.show(io::IO, m::MIME"text/plain", d::SparseCat) = showdistribution(io, m, d, title="SparseCat distribution")

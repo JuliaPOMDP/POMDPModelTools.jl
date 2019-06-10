@@ -29,3 +29,5 @@ support(d::BoolDistribution) = [true, false]
 Base.hash(d::BoolDistribution) = hash(d.p)
 
 Base.length(d::BoolDistribution) = 2
+
+Base.show(io::IO, m::MIME"text/plain", d::BoolDistribution) = showdistribution(io, m, d, title="BoolDistribution")
