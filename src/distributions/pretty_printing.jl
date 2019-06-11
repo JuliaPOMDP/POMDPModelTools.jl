@@ -15,7 +15,7 @@ function showdistribution(io::IO, mime::MIME"text/plain", d; title=string(typeof
     rows = first(get(io, :displaysize, displaysize(io)))
     rows -= 6 # Yuck! This magic number is also in Base.print_matrix
 
-    if limited && rows > 1
+    if limited && rows > 1 && length(support(d)) >= rows
         for (x,p) in Iterators.take(weighted_iterator(d), rows-1)
             push!(strings, sprint(show, x)) # maybe this should have conext=:compact=>true
             push!(probs, p)
