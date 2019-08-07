@@ -2,6 +2,21 @@
 
 POMDPModelTools contains several tools for transforming problems into other classes so that they can be used by different solvers.
 
+## Sparse Tabular MDPs and POMDPs
+
+The `SparseTabularMDP` and `SparseTabularPOMDP` represents discrete problems defined using the explicit interface. The transition and observation models are represented using sparse matrices. Solver writers can leverage these data structures to write efficient vectorized code. A problem writer can define its problem using the explicit interface and it can be automatically converted to a sparse tabular representation by calling the constructors `SparseTabularMDP(::MDP)` or `SparseTabularPOMDP(::POMDP)`. See the following docs to know more about the matrix representation and how to access the fields of the `SparseTabular` objects:
+
+```@docs
+SparseTabularMDP
+SparseTabularPOMDP
+transition_matrix
+reward_vector
+observation_matrix
+transition_matrices
+reward_matrix
+observation_matrices
+```
+
 ## Fully Observable POMDP
 
 ```@docs
