@@ -89,4 +89,16 @@ export
     showdistribution
 include("distributions/pretty_printing.jl")
 
+export 
+    SparseTabularMDP,
+    SparseTabularPOMDP,
+    transition_matrix,
+    reward_vector,
+    observation_matrix,
+    transition_matrices,
+    reward_matrix,
+    observation_matrices
+
+include("sparse_tabular.jl")
+
 end # module

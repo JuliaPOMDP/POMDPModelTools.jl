@@ -7,6 +7,7 @@ using Pkg
 using POMDPSimulators
 using POMDPPolicies
 import Distributions.Categorical
+using SparseArrays
 
 @testset "ordered" begin
     include("test_ordered_spaces.jl")
@@ -65,4 +66,8 @@ end
 
 @testset "pretty printing" begin
     include("test_pretty_printing.jl")
+end
+
+@testset "sparse tabular" begin
+    include("test_tabular.jl")
 end
