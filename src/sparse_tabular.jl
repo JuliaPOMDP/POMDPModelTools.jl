@@ -38,8 +38,6 @@ end
     S = statetype(P)
     A = actiontype(P)
     @req discount(::P)
-    @req n_states(::P)
-    @req n_actions(::P)
     @subreq ordered_states(mdp)
     @subreq ordered_actions(mdp)
     @req transition(::P,::S,::A)
@@ -49,6 +47,8 @@ end
     @req actions(::P, ::S)
     as = actions(mdp)
     ss = states(mdp)
+    @req length(::typeof(as))
+    @req length(::typeof(ss))
     a = first(as)
     s = first(ss)
     dist = transition(mdp, s, a)
@@ -113,8 +113,6 @@ end
     A = actiontype(P)
     O = obstype(P)
     @req discount(::P)
-    @req n_states(::P)
-    @req n_actions(::P)
     @subreq ordered_states(pomdp)
     @subreq ordered_actions(pomdp)
     @subreq ordered_observations(pomdp)
@@ -128,6 +126,8 @@ end
     @req obsindex(::P, ::O)
     as = actions(pomdp)
     ss = states(pomdp)
+    @req length(::typeof(as))
+    @req length(::typeof(ss))
     a = first(as)
     s = first(ss)
     dist = transition(pomdp, s, a)
@@ -160,8 +160,9 @@ const SparseTabularProblem = Union{SparseTabularMDP, SparseTabularPOMDP}
 
 function transition_matrix_a_s_sp(mdp::Union{MDP, POMDP})
     # Thanks to zach
-    na = n_actions(mdp)
-    ns = n_states(mdp)
+    na = length(actions(mdp))
+    state_space = states(mdp)
+    ns = length(state_space)
     transmat_row_A = [Int[] for _ in 1:n_actions(mdp)]
     transmat_col_A = [Int[] for _ in 1:n_actions(mdp)]
     transmat_data_A = [Float64[] for _ in 1:n_actions(mdp)]
@@ -187,15 +188,17 @@ function transition_matrix_a_s_sp(mdp::Union{MDP, POMDP})
             end
         end
     end
-    transmats_A_S_S2 = [sparse(transmat_row_A[a], transmat_col_A[a], transmat_data_A[a], n_states(mdp), n_states(mdp)) for a in 1:n_actions(mdp)]
+    transmats_A_S_S2 = [sparse(transmat_row_A[a], transmat_col_A[a], transmat_data_A[a], ns, ns) for a in 1:na]
     # if an action is not valid from a state, the transition is 0.0 everywhere
-    # @assert all(all(sum(transmats_A_S_S2[a], dims=2) .≈ ones(n_states(mdp))) for a in 1:n_actions(mdp)) "Transition probabilities must sum to 1"
+    # @assert all(all(sum(transmats_A_S_S2[a], dims=2) .≈ ones(ns)) for a in 1:na) "Transition probabilities must sum to 1"
     return transmats_A_S_S2
 end
 
 function reward_s_a(mdp::Union{MDP, POMDP})
-    reward_S_A = fill(-Inf, (n_states(mdp), n_actions(mdp))) # set reward for all actions to -Inf unless they are in actions(mdp, s)
-    for s in states(mdp)
+    state_space = states(mdp)
+    action_space = actions(mdp)
+    reward_S_A = fill(-Inf, (length(state_space), length(action_space))) # set reward for all actions to -Inf unless they are in actions(mdp, s)
+    for s in state_space
         if isterminal(mdp, s)
             reward_S_A[stateindex(mdp, s), :] .= 0.0
         else
@@ -227,12 +230,15 @@ function terminal_states_set(mdp::Union{MDP, POMDP})
 end
 
 function observation_matrix_a_sp_o(pomdp::POMDP)
-    na = n_actions(pomdp)
-    ns = n_states(pomdp)
-    no = n_observations(pomdp)
-    obsmat_row_A = [Int[] for _ in 1:n_actions(pomdp)]
-    obsmat_col_A = [Int[] for _ in 1:n_actions(pomdp)]
-    obsmat_data_A = [Float64[] for _ in 1:n_actions(pomdp)]
+    state_space = states(pomdp)
+    action_space = actions(pomdp)
+    obs_space = observations(pomdp)
+    na = length(action_space)
+    ns = length(state_space)
+    no = length(obs_space)
+    obsmat_row_A = [Int[] for _ in 1:na]
+    obsmat_col_A = [Int[] for _ in 1:na]
+    obsmat_data_A = [Float64[] for _ in 1:na]
 
     for sp in states(pomdp)
         spi = stateindex(pomdp, sp)
@@ -249,19 +255,16 @@ function observation_matrix_a_sp_o(pomdp::POMDP)
             end
         end
     end
-    obsmats_A_SP_O = [sparse(obsmat_row_A[a], obsmat_col_A[a], obsmat_data_A[a], n_states(pomdp), n_states(pomdp)) for a in 1:n_actions(pomdp)]
-    @assert all(all(sum(obsmats_A_SP_O[a], dims=2) .≈ ones(n_observations(pomdp))) for a in 1:n_actions(pomdp)) "Observation probabilities must sum to 1"
+    obsmats_A_SP_O = [sparse(obsmat_row_A[a], obsmat_col_A[a], obsmat_data_A[a], ns, ns) for a in 1:na]
+    @assert all(all(sum(obsmats_A_SP_O[a], dims=2) .≈ ones(no)) for a in 1:na) "Observation probabilities must sum to 1"
     return obsmats_A_SP_O
 end
 
 # MDP and POMDP common methods
 
-POMDPs.n_states(prob::SparseTabularProblem) = size(prob.T[1], 1)
-POMDPs.n_actions(prob::SparseTabularProblem) = size(prob.T, 1)
-
-POMDPs.states(p::SparseTabularProblem) = 1:n_states(p)
-POMDPs.actions(p::SparseTabularProblem) = 1:n_actions(p)
-POMDPs.actions(p::SparseTabularProblem, s::Int64) = [a for a in actions(p) if sum(transition_matrix(p, a)) ≈ n_states(p)]
+POMDPs.states(p::SparseTabularProblem) = 1:size(p.T[1], 1)
+POMDPs.actions(p::SparseTabularProblem) = 1:size(p.T, 1)
+POMDPs.actions(p::SparseTabularProblem, s::Int64) = [a for a in actions(p) if sum(transition_matrix(p, a)) ≈ size(p.T[1], 1)]
 
 POMDPs.stateindex(::SparseTabularProblem, s::Int64) = s
 POMDPs.actionindex(::SparseTabularProblem, a::Int64) = a
@@ -303,9 +306,8 @@ Accessor function for the reward matrix R[s, a] of a sparse tabular problem.
 reward_matrix(p::SparseTabularProblem) = p.R
 
 # POMDP only methods
-POMDPs.n_observations(p::SparseTabularPOMDP) = size(p.O[1], 2)
 
-POMDPs.observations(p::SparseTabularPOMDP) = 1:n_observations(p)
+POMDPs.observations(p::SparseTabularPOMDP) = 1:size(p.O[1], 2)
 
 POMDPs.observation(p::SparseTabularPOMDP, a::Int64, sp::Int64) = SparseCat(findnz(p.O[a][sp, :])...)
 

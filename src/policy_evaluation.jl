@@ -41,12 +41,12 @@ Create an |S|x|S| sparse transition matrix for a given policy.
 The row corresponds to the current state and column to the next state. Corresponds to ``T^π`` in equation (4.7) in Kochenderfer, *Decision Making Under Uncertainty*, 2015.
 """
 function policy_transition_matrix(m::Union{MDP,POMDP}, p::Policy)
-    ns = n_states(m)
     rows = Int[]
     cols = Int[]
     probs = Float64[]
-
-    for s in states(m)
+    state_space = states(m)
+    ns = length(state_space)
+    for s in state_space
       if !isterminal(m, s) # if terminal, the transition probabilities are all just zero
         si = stateindex(m, s)
         a = action(p, s)
@@ -66,8 +66,9 @@ function policy_transition_matrix(m::Union{MDP,POMDP}, p::Policy)
 end
 
 function policy_reward_vector(m::Union{MDP,POMDP}, p::Policy; rewardfunction=POMDPs.reward)
-    r = zeros(n_states(m))
-    for s in states(m)
+    state_space = states(m)
+    r = zeros(length(state_space))
+    for s in state_space
         if !isterminal(m, s) # if terminal, the transition probabilities are all just zero
             si = stateindex(m, s)
             a = action(p, s)

@@ -7,7 +7,7 @@ Return an `AbstractVector` of actions ordered according to `actionindex(mdp, a)`
 
 `ordered_actions(mdp)` will always return an `AbstractVector{A}` `v` containing all of the actions in `actions(mdp)` in the order such that `actionindex(mdp, v[i]) == i`. You may wish to override this for your problem for efficiency.
 """
-ordered_actions(mdp::Union{MDP,POMDP}) = ordered_vector(actiontype(typeof(mdp)), a->actionindex(mdp,a), actions(mdp), n_actions(mdp), "action")
+ordered_actions(mdp::Union{MDP,POMDP}) = ordered_vector(actiontype(typeof(mdp)), a->actionindex(mdp,a), actions(mdp), "action")
 
 """
     ordered_states(mdp)    
@@ -16,7 +16,7 @@ Return an `AbstractVector` of states ordered according to `stateindex(mdp, a)`.
 
 `ordered_states(mdp)` will always return a `AbstractVector{A}` `v` containing all of the states in `states(mdp)` in the order such that `stateindex(mdp, v[i]) == i`. You may wish to override this for your problem for efficiency.
 """
-ordered_states(mdp::Union{MDP,POMDP}) = ordered_vector(statetype(typeof(mdp)), s->stateindex(mdp,s), states(mdp), n_states(mdp), "state")
+ordered_states(mdp::Union{MDP,POMDP}) = ordered_vector(statetype(typeof(mdp)), s->stateindex(mdp,s), states(mdp), "state")
 
 """
     ordered_observations(pomdp)    
@@ -25,9 +25,10 @@ Return an `AbstractVector` of observations ordered according to `obsindex(pomdp,
 
 `ordered_observations(mdp)` will always return a `AbstractVector{A}` `v` containing all of the observations in `observations(pomdp)` in the order such that `obsindex(pomdp, v[i]) == i`. You may wish to override this for your problem for efficiency.
 """
-ordered_observations(pomdp::POMDP) = ordered_vector(obstype(typeof(pomdp)), o->obsindex(pomdp,o), observations(pomdp), n_observations(pomdp), "observation")
+ordered_observations(pomdp::POMDP) = ordered_vector(obstype(typeof(pomdp)), o->obsindex(pomdp,o), observations(pomdp), "observation")
 
-function ordered_vector(T::Type, index::Function, space, len, singular, plural=singular*"s")
+function ordered_vector(T::Type, index::Function, space, singular, plural=singular*"s")
+    len = length(space)
     a = Array{T}(undef, len)
     gotten = falses(len)
     for x in space
@@ -39,7 +40,7 @@ function ordered_vector(T::Type, index::Function, space, len, singular, plural=s
                   index was $id.
 
                   n_$plural(...) was $len.
-                  """)
+                  """) 
         end
         a[id] = x
         gotten[id] = true
@@ -60,23 +61,23 @@ end
 @POMDP_require ordered_actions(mdp::Union{MDP,POMDP}) begin
     P = typeof(mdp)
     @req actionindex(::P, ::actiontype(P))
-    @req n_actions(::P)
     @req actions(::P)
     as = actions(mdp)
+    @req length(::typeof(as))
 end
 
 @POMDP_require ordered_states(mdp::Union{MDP,POMDP}) begin
     P = typeof(mdp)
     @req stateindex(::P, ::statetype(P))
-    @req n_states(::P)
     @req states(::P)
-    as = states(mdp)
+    ss = states(mdp)
+    @req length(::typeof(ss))
 end
 
 @POMDP_require ordered_observations(mdp::Union{MDP,POMDP}) begin
     P = typeof(mdp)
     @req obsindex(::P, ::obstype(P))
-    @req n_observations(::P)
     @req observations(::P)
-    as = observations(mdp)
+    os = observations(mdp)
+    @req length(::typeof(os))
 end

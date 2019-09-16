@@ -8,7 +8,6 @@ struct FullyObservablePOMDP{S, A} <: POMDP{S,A,S}
 end
 
 POMDPs.observations(pomdp::FullyObservablePOMDP) = states(pomdp.mdp)
-POMDPs.n_observations(pomdp::FullyObservablePOMDP) = n_states(pomdp.mdp)
 POMDPs.obsindex(pomdp::FullyObservablePOMDP{S, A}, o::S) where {S, A} = stateindex(pomdp.mdp, o)
 
 POMDPs.convert_o(T::Type{V}, o, pomdp::FullyObservablePOMDP) where {V<:AbstractArray} = convert_s(T, s, pomdp.mdp)
@@ -39,8 +38,6 @@ POMDPs.generate_sr(pomdp::FullyObservablePOMDP, s, a, rng::AbstractRNG) = genera
 POMDPs.reward(pomdp::FullyObservablePOMDP{S, A}, s::S, a::A) where {S,A} = reward(pomdp.mdp, s, a)
 POMDPs.isterminal(pomdp::FullyObservablePOMDP, s) = isterminal(pomdp.mdp, s)
 POMDPs.discount(pomdp::FullyObservablePOMDP) = discount(pomdp.mdp)
-POMDPs.n_states(pomdp::FullyObservablePOMDP) = n_states(pomdp.mdp)
-POMDPs.n_actions(pomdp::FullyObservablePOMDP) = n_actions(pomdp.mdp)
 POMDPs.stateindex(pomdp::FullyObservablePOMDP{S,A}, s::S) where {S,A} = stateindex(pomdp.mdp, s)
 POMDPs.actionindex(pomdp::FullyObservablePOMDP{S, A}, a::A) where {S,A} = actionindex(pomdp.mdp, a)
 POMDPs.convert_s(T::Type{V}, s, pomdp::FullyObservablePOMDP) where V<:AbstractArray = convert_s(T, s, pomdp.mdp)

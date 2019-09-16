@@ -4,11 +4,9 @@ let
     pomdp = FullyObservablePOMDP(mdp)
 
     @test observations(pomdp) == states(pomdp)
-    @test n_observations(pomdp) == n_states(pomdp)
     @test statetype(pomdp) == obstype(pomdp)
 
     @test observations(pomdp) == states(pomdp)
-    @test n_observations(pomdp) == n_states(pomdp)
     @test statetype(pomdp) == obstype(pomdp)
     
     s_po = initialstate(pomdp, MersenneTwister(1))
