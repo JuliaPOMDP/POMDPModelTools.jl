@@ -35,3 +35,5 @@ POMDPs.stateindex(mdp::UnderlyingMDP{P, Bool, A}, s::Bool) where {P,A} = statein
 POMDPs.actionindex(mdp::UnderlyingMDP{P, S, A}, a::A) where {P,S,A} = actionindex(mdp.pomdp, a)
 POMDPs.actionindex(mdp::UnderlyingMDP{P,S, Int}, a::Int) where {P,S} = actionindex(mdp.pomdp, a)
 POMDPs.actionindex(mdp::UnderlyingMDP{P,S, Bool}, a::Bool) where {P,S} = actionindex(mdp.pomdp, a)
+POMDPs.n_actions(mdp::UnderlyingMDP) = n_actions(mdp.pomdp)
+POMDPs.n_states(mdp::UnderlyingMDP) = n_states(mdp.pomdp)
