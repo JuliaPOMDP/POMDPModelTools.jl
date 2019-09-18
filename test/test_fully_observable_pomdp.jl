@@ -1,5 +1,5 @@
 let
-    mdp = GridWorld()
+    mdp = SimpleGridWorld()
 
     pomdp = FullyObservablePOMDP(mdp)
 

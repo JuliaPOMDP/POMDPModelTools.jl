@@ -22,11 +22,12 @@ include("visualization.jl")
 
 # info interface
 export
-    generate_sri,
-    generate_sori,
+    add_infonode,
     action_info,
     solve_info,
-    update_info
+    update_info,
+    generate_sri,
+    generate_sori
 include("info.jl")
 
 export
