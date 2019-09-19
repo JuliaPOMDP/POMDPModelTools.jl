@@ -37,7 +37,28 @@ end
 """
     add_infonode(ddn::DDNStructure)
 
-Create a new DDNStructure object with a new node labeled :info with parents :s and :a
+Create a new DDNStructure object with a new node labeled :info for returning miscellaneous informationabout a simulation step.
+
+# Example (using POMDPs v0.8)
+
+```
+using POMDPs, POMDPModelTools, POMDPPolicies
+
+struct MyMDP <: MDP{Int, Int} end
+POMDPs.DDNStructure(::Type{MyMDP}) = DDNStructure(MDP) |> add_infonode
+function POMDPs.gen(m::MyMDP, s, a, rng)
+    r1 = rand(rng)
+    r2 = randn(rng)
+    return (sp = s + a + r1 + r2, r = s^2, info=(r1=r1, r2=r2))
+end
+
+m = MyMDP()
+@show nodenames(DDNStructure(m))
+for (s,info) in stepthrough(m, FunctionPolicy(s->1), "s,info", max_steps=5)
+    @show s
+    @show info 
+end
+```
 """
 function add_infonode(ddn) # for DDNStructure, but it is not declared in v0.7.3, so there is not annotation
     add_node(ddn, :info, ConstantDDNNode(nothing), (:s, :a))

@@ -1,3 +1,5 @@
+push!(LOAD_PATH, "../src/")
+
 using Documenter, POMDPModelTools
 
 makedocs(
@@ -8,10 +10,4 @@ makedocs(
 
 deploydocs(
     repo = "github.com/JuliaPOMDP/POMDPModelTools.jl.git",
-    julia = "1.0",
-    osname = "linux",
-    target = "build",
-    deps = nothing,
-    make = nothing
 )
-
