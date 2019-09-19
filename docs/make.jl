@@ -4,7 +4,7 @@ using Documenter, POMDPModelTools
 
 makedocs(
     modules = [POMDPModelTools],
-    format = :html,
+    format = Documenter.HTML(),
     sitename = "POMDPModelTools.jl"
 )
 
