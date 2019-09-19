@@ -20,8 +20,6 @@ UnderlyingMDP(m::MDP) = m
 
 POMDPs.transition(mdp::UnderlyingMDP{P, S, A}, s::S, a::A) where {P,S,A}= transition(mdp.pomdp, s, a)
 POMDPs.initialstate_distribution(mdp::UnderlyingMDP) = initialstate_distribution(mdp.pomdp)
-POMDPs.generate_s(mdp::UnderlyingMDP, s, a, rng::AbstractRNG) = generate_s(mdp.pomdp, s, a, rng)
-POMDPs.generate_sr(mdp::UnderlyingMDP, s, a, rng::AbstractRNG) = generate_sr(mdp.pomdp, s, a, rng)
 POMDPs.initialstate(mdp::UnderlyingMDP, rng::AbstractRNG) = initialstate(mdp.pomdp, rng)
 POMDPs.states(mdp::UnderlyingMDP) = states(mdp.pomdp)
 POMDPs.actions(mdp::UnderlyingMDP) = actions(mdp.pomdp)
@@ -35,5 +33,12 @@ POMDPs.stateindex(mdp::UnderlyingMDP{P, Bool, A}, s::Bool) where {P,A} = statein
 POMDPs.actionindex(mdp::UnderlyingMDP{P, S, A}, a::A) where {P,S,A} = actionindex(mdp.pomdp, a)
 POMDPs.actionindex(mdp::UnderlyingMDP{P,S, Int}, a::Int) where {P,S} = actionindex(mdp.pomdp, a)
 POMDPs.actionindex(mdp::UnderlyingMDP{P,S, Bool}, a::Bool) where {P,S} = actionindex(mdp.pomdp, a)
+
+POMDPs.gen(d::Union{DDNOut,DDNNode}, mdp::UnderlyingMDP, s, a, rng) = gen(d, mdp.pomdp, s, a, rng)
+POMDPs.gen(mdp::UnderlyingMDP, s, a, rng) = gen(m.pomdp, s, a, rng)
+
+# deprecated in POMDPs v0.8
 POMDPs.n_actions(mdp::UnderlyingMDP) = n_actions(mdp.pomdp)
 POMDPs.n_states(mdp::UnderlyingMDP) = n_states(mdp.pomdp)
+POMDPs.generate_s(mdp::UnderlyingMDP, s, a, rng::AbstractRNG) = generate_s(mdp.pomdp, s, a, rng)
+POMDPs.generate_sr(mdp::UnderlyingMDP, s, a, rng::AbstractRNG) = generate_sr(mdp.pomdp, s, a, rng)

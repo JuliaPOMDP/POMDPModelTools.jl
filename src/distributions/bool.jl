@@ -23,11 +23,6 @@ function Base.iterate(d::BoolDistribution, state::Bool)
 end    
 
 support(d::BoolDistribution) = [true, false]
-
-==(d1::BoolDistribution, d2::BoolDistribution) = d1.p == d2.p
-
-Base.hash(d::BoolDistribution) = hash(d.p)
-
 Base.length(d::BoolDistribution) = 2
 
 Base.show(io::IO, m::MIME"text/plain", d::BoolDistribution) = showdistribution(io, m, d, title="BoolDistribution")

@@ -5,8 +5,8 @@ let
     @test pdf(d, :c) == 0.0
     @test pdf(d, :a) == 0.4
     @test mode(d) == :b
-    @test sampletype(d) == Symbol
-    @test sampletype(typeof(d)) == Symbol
+    @test Random.gentype(d) == Symbol
+    @test Random.gentype(typeof(d)) == Symbol
     @inferred rand(Random.GLOBAL_RNG, d)
 
     dt = SparseCat((:a, :b, :d), (0.4, 0.5, 0.1))
@@ -15,8 +15,8 @@ let
     @test pdf(dt, :c) == 0.0
     @test pdf(dt, :a) == 0.4
     @test mode(dt) == :b
-    @test sampletype(dt) == Symbol
-    @test sampletype(typeof(dt)) == Symbol
+    @test Random.gentype(dt) == Symbol
+    @test Random.gentype(typeof(dt)) == Symbol
     @inferred rand(Random.GLOBAL_RNG, dt)
 
     rng = MersenneTwister(14)
