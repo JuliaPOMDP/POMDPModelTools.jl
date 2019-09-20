@@ -5,6 +5,7 @@ using Random
 using Test
 using Pkg
 using POMDPSimulators
+using BeliefUpdaters
 using POMDPPolicies
 import Distributions.Categorical
 using SparseArrays

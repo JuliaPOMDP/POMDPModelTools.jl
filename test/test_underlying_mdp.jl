@@ -16,6 +16,10 @@ let
 
     actionindex(mdp, 1)
 
+    for (sp, r) in stepthrough(mdp, FunctionPolicy(o->1), "sp,r", rng=MersenneTwister(2), max_steps=10)
+        @test sp isa statetype(pomdp)
+    end
+
     # test mdp passthrough
     m = SimpleGridWorld()
     @test UnderlyingMDP(m) === m
