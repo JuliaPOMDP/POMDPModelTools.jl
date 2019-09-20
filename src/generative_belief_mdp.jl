@@ -14,15 +14,20 @@ function GenerativeBeliefMDP(pomdp::P, up::U) where {P<:POMDP, U<:Updater}
     GenerativeBeliefMDP{P, U, typeof(b0), actiontype(pomdp)}(pomdp, up)
 end
 
-function generate_sr(bmdp::GenerativeBeliefMDP, b, a, rng::AbstractRNG)
+function POMDPs.gen(bmdp::GenerativeBeliefMDP, b, a, rng::AbstractRNG)
     s = rand(rng, b)
     if isterminal(bmdp.pomdp, s)
         bp = gbmdp_handle_terminal(bmdp.pomdp, bmdp.updater, b, s, a, rng::AbstractRNG)::typeof(b)
         return bp, 0.0
     end
-    sp, o, r = generate_sor(bmdp.pomdp, s, a, rng) # maybe this should have been generate_or?
+    sp, o, r = gen(DDNOut(:sp,:o,:r), bmdp.pomdp, s, a, rng) # maybe this should have been generate_or?
     bp = update(bmdp.updater, b, a, o)
-    return bp, r
+    return (sp=bp, r=r)
+end
+
+function generate_sr(bmdp::GenerativeBeliefMDP, b, a, rng::AbstractRNG)
+    x = gen(bmdp, b, a, rng)
+    return x.sp, x.r
 end
 
 function initialstate(bmdp::GenerativeBeliefMDP, rng::AbstractRNG)

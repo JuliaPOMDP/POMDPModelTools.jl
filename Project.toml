@@ -1,7 +1,7 @@
 name = "POMDPModelTools"
 uuid = "08074719-1b2a-587c-a292-00f91cc44415"
 authors = ["JuliaPOMDP Contributors"]
-version = "0.1.7"
+version = "0.2.0"
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
@@ -14,9 +14,11 @@ UnicodePlots = "b8865327-cd53-5732-bb35-84acbb429228"
 
 [compat]
 Distributions = ">= 0.17"
+POMDPs = "0.7.3, 0.8.0"
 julia = "1"
 
 [extras]
+BeliefUpdaters = "8bb6e9a1-7d73-552c-a44a-e5dc5634aac4"
 POMDPModels = "355abbd5-f08e-5560-ac9e-8b5f2592a0ca"
 POMDPPolicies = "182e52fb-cfd0-5e46-8c26-fd0667c990f4"
 POMDPSimulators = "e0d0a172-29c6-5d4e-96d0-f262df5d01fd"
@@ -24,4 +26,4 @@ Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Test", "POMDPModels", "POMDPSimulators", "POMDPPolicies", "Pkg"]
+test = ["Test", "POMDPModels", "POMDPSimulators", "POMDPPolicies", "BeliefUpdaters", "Pkg"]

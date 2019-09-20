@@ -3,7 +3,6 @@ let
 
     mdp = UnderlyingMDP(pomdp)
 
-    @test n_states(mdp) == n_states(pomdp)
     @test states(mdp) == states(pomdp)
     s_mdp = rand(MersenneTwister(1), initialstate_distribution(mdp))
     s_pomdp = rand(MersenneTwister(1), initialstate_distribution(pomdp))
@@ -12,10 +11,14 @@ let
 
     solver = ValueIterationSolver(max_iterations = 100)
     mdp_policy = solve(solver, mdp)
-    pomdp_policy = solve(solver, pomdp)
+    pomdp_policy = solve(solver, UnderlyingMDP(pomdp))
     @test mdp_policy.util == pomdp_policy.util
 
     actionindex(mdp, 1)
+
+    for (sp, r) in stepthrough(mdp, FunctionPolicy(o->1), "sp,r", rng=MersenneTwister(2), max_steps=10)
+        @test sp isa statetype(pomdp)
+    end
 
     # test mdp passthrough
     m = SimpleGridWorld()

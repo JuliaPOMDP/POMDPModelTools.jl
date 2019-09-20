@@ -90,6 +90,7 @@ end
 Base.length(d::SparseCat) = min(length(d.vals), length(d.probs))
 Base.eltype(D::Type{SparseCat{V,P}}) where {V, P} = Pair{eltype(V), eltype(P)}
 sampletype(D::Type{SparseCat{V,P}}) where {V, P} = eltype(V)
+Random.gentype(D::Type{SparseCat{V,P}}) where {V, P} = eltype(V)
 
 function mean(d::SparseCat)
     vsum = zero(eltype(d.vals))

@@ -13,6 +13,7 @@ rand(rng::AbstractRNG, d::Deterministic) = d.val
 rand(d::Deterministic) = d.val
 support(d::Deterministic) = (d.val,)
 sampletype(::Type{Deterministic{T}}) where T = T
+Random.gentype(::Type{Deterministic{T}}) where T = T
 pdf(d::Deterministic, x) = convert(Float64, x == d.val)
 mode(d::Deterministic) = d.val
 mean(d::Deterministic{N}) where N<:Number = d.val / 1 # / 1 is to make this return a similar type to Statistics.mean

@@ -6,9 +6,9 @@ using LinearAlgebra
 using SparseArrays
 using UnicodePlots
 
-import POMDPs: actions, n_actions, actionindex
-import POMDPs: states, n_states, stateindex
-import POMDPs: observations, n_observations, obsindex
+import POMDPs: actions, actionindex
+import POMDPs: states, stateindex
+import POMDPs: observations, obsindex
 import POMDPs: sampletype, generate_sr, initialstate, isterminal, discount
 import POMDPs: implemented
 import Distributions: pdf, mode, mean, support
@@ -22,11 +22,12 @@ include("visualization.jl")
 
 # info interface
 export
-    generate_sri,
-    generate_sori,
+    add_infonode,
     action_info,
     solve_info,
-    update_info
+    update_info,
+    generate_sri,
+    generate_sori
 include("info.jl")
 
 export

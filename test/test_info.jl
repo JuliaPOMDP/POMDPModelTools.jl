@@ -23,14 +23,20 @@ let
     rng = MersenneTwister(7)
 
     mdp = LegacyGridWorld()
+    POMDPs.DDNStructure(::Type{typeof(mdp)}) = DDNStructure(MDP) |> add_infonode
+    @test :info in nodenames(DDNStructure(mdp))
     s = initialstate(mdp, rng)
     a = rand(rng, actions(mdp))
-    @inferred generate_sri(mdp, s, a, rng)
+    sp, r, i = @inferred gen(DDNOut(:sp,:r,:info), mdp, s, a, rng)
+    @test i === nothing
 
     pomdp = TigerPOMDP()
+    POMDPs.DDNStructure(::Type{typeof(pomdp)}) = DDNStructure(POMDP) |> add_infonode
+    @test :info in nodenames(DDNStructure(pomdp))
     s = initialstate(pomdp, rng)
     a = rand(rng, actions(pomdp))
-    @inferred generate_sori(pomdp, s, a, rng)
+    sp, o, r, i = @inferred gen(DDNOut(:sp,:o,:r,:info), pomdp, s, a, rng)
+    @test i === nothing
 
     up = VoidUpdater()
     policy = RandomPolicy(rng, pomdp)
@@ -43,6 +49,6 @@ let
     d = initialstate_distribution(pomdp)
     b = initialize_belief(up, d)
     a = action(policy, b)
-    sp, o = generate_so(pomdp, rand(rng, d), a, rng)
+    sp, o, r = gen(DDNOut(:sp,:o,:r), pomdp, rand(rng, d), a, rng)
     @inferred update_info(up, b, a, o)
 end

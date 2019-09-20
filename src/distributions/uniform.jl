@@ -24,6 +24,7 @@ end
 
 support(d::Uniform) = d.set
 sampletype(::Type{Uniform{T}}) where T = eltype(T)
+Random.gentype(::Type{Uniform{T}}) where T = eltype(T)
 
 function pdf(d::Uniform, s)
     if s in d.set
@@ -49,6 +50,7 @@ end
 pdf(d::UnsafeUniform, s) = 1.0/length(d.collection)
 support(d::UnsafeUniform) = d.collection
 sampletype(::Type{UnsafeUniform{T}}) where T = eltype(T)
+Random.gentype(::Type{UnsafeUniform{T}}) where T = eltype(T)
 
 # Common Implementations
 
