@@ -163,11 +163,11 @@ function transition_matrix_a_s_sp(mdp::Union{MDP, POMDP})
     na = length(actions(mdp))
     state_space = states(mdp)
     ns = length(state_space)
-    transmat_row_A = [Int[] for _ in 1:n_actions(mdp)]
-    transmat_col_A = [Int[] for _ in 1:n_actions(mdp)]
-    transmat_data_A = [Float64[] for _ in 1:n_actions(mdp)]
+    transmat_row_A = [Int64[] for _ in 1:na]
+    transmat_col_A = [Int64[] for _ in 1:na]
+    transmat_data_A = [Float64[] for _ in 1:na]
 
-    for s in states(mdp)
+    for s in state_space
         si = stateindex(mdp, s)
         for a in actions(mdp, s)
             ai = actionindex(mdp, a)
@@ -230,19 +230,15 @@ function terminal_states_set(mdp::Union{MDP, POMDP})
 end
 
 function observation_matrix_a_sp_o(pomdp::POMDP)
-    state_space = states(pomdp)
-    action_space = actions(pomdp)
-    obs_space = observations(pomdp)
-    na = length(action_space)
-    ns = length(state_space)
-    no = length(obs_space)
-    obsmat_row_A = [Int[] for _ in 1:na]
-    obsmat_col_A = [Int[] for _ in 1:na]
+    state_space, action_space, obs_space = states(pomdp), actions(pomdp), observations(pomdp)
+    na, ns, no = length(action_space), length(state_space), length(obs_space)
+    obsmat_row_A = [Int64[] for _ in 1:na]
+    obsmat_col_A = [Int64[] for _ in 1:na]
     obsmat_data_A = [Float64[] for _ in 1:na]
 
-    for sp in states(pomdp)
+    for sp in state_space
         spi = stateindex(pomdp, sp)
-        for a in actions(pomdp)
+        for a in action_space
             ai = actionindex(pomdp, a)
             od = observation(pomdp, a, sp)
             for (o, p) in weighted_iterator(od)
@@ -255,8 +251,8 @@ function observation_matrix_a_sp_o(pomdp::POMDP)
             end
         end
     end
-    obsmats_A_SP_O = [sparse(obsmat_row_A[a], obsmat_col_A[a], obsmat_data_A[a], ns, ns) for a in 1:na]
-    @assert all(all(sum(obsmats_A_SP_O[a], dims=2) .≈ ones(no)) for a in 1:na) "Observation probabilities must sum to 1"
+    obsmats_A_SP_O = [sparse(obsmat_row_A[a], obsmat_col_A[a], obsmat_data_A[a], ns, no) for a in 1:na]
+    @assert all(all(sum(obsmats_A_SP_O[a], dims=2) .≈ ones(ns)) for a in 1:na) "Observation probabilities must sum to 1"
     return obsmats_A_SP_O
 end
 
