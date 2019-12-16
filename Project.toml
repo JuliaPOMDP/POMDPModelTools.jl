@@ -4,7 +4,6 @@ authors = ["JuliaPOMDP Contributors"]
 version = "0.2.1"
 
 [deps]
-Compose = "a81c6b42-2e10-5240-aca2-a61377ecd94b"
 DiscreteValueIteration = "4b033969-44f6-5439-a48b-c11fa3648068"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
