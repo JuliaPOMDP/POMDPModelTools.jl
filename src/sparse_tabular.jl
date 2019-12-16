@@ -171,11 +171,11 @@ function transition_matrix_a_s_sp(mdp::Union{MDP, POMDP})
         si = stateindex(mdp, s)
         for a in actions(mdp, s)
             ai = actionindex(mdp, a)
-            if isterminal(mdp, s) # if terminal, there is a probability of 1 of staying in that state
-                push!(transmat_row_A[ai], si)
-                push!(transmat_col_A[ai], si)
-                push!(transmat_data_A[ai], 1.0)
-            else
+            # if isterminal(mdp, s) # if terminal, there is a probability of 1 of staying in that state
+            #     push!(transmat_row_A[ai], si)
+            #     push!(transmat_col_A[ai], si)
+            #     push!(transmat_data_A[ai], 1.0)
+            # else
                 td = transition(mdp, s, a)
                 for (sp, p) in weighted_iterator(td)
                     if p > 0.0
@@ -185,7 +185,7 @@ function transition_matrix_a_s_sp(mdp::Union{MDP, POMDP})
                         push!(transmat_data_A[ai], p)
                     end
                 end
-            end
+            # end
         end
     end
     transmats_A_S_S2 = [sparse(transmat_row_A[a], transmat_col_A[a], transmat_data_A[a], ns, ns) for a in 1:na]
@@ -199,9 +199,9 @@ function reward_s_a(mdp::Union{MDP, POMDP})
     action_space = actions(mdp)
     reward_S_A = fill(-Inf, (length(state_space), length(action_space))) # set reward for all actions to -Inf unless they are in actions(mdp, s)
     for s in state_space
-        if isterminal(mdp, s)
-            reward_S_A[stateindex(mdp, s), :] .= 0.0
-        else
+        # if isterminal(mdp, s)
+        #     reward_S_A[stateindex(mdp, s), :] .= 0.0
+        # else
             for a in actions(mdp, s)
                 td = transition(mdp, s, a)
                 r = 0.0
@@ -212,7 +212,7 @@ function reward_s_a(mdp::Union{MDP, POMDP})
                 end
                 reward_S_A[stateindex(mdp, s), actionindex(mdp, a)] = r
             end
-        end
+        # end
     end
     return reward_S_A
 end
