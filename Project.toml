@@ -6,6 +6,7 @@ version = "0.2.1"
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+POMDPModels = "355abbd5-f08e-5560-ac9e-8b5f2592a0ca"
 POMDPs = "a93abf59-7444-517b-a68a-c42f96afdd7d"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
@@ -14,7 +15,7 @@ UnicodePlots = "b8865327-cd53-5732-bb35-84acbb429228"
 
 [compat]
 Distributions = ">= 0.17"
-POMDPModels = ">= 0.4.2"
+POMDPModels = ">= 0.4.3"
 POMDPs = "0.7.3, 0.8.0"
 julia = "1"
 

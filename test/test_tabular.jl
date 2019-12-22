@@ -21,14 +21,18 @@ function test_reward(pb1::Union{MDP, POMDP}, pb2::Union{SparseTabularMDP, Sparse
             si = stateindex(pb1, s)
             for a in actions(pb1)
                 ai = actionindex(pb1, a)
-                td = transition(pb1, s, a)
-                r_pb1 = 0.0
-                for (sp, p) in weighted_iterator(td)
-                    if p > 0.0
-                        r_pb1 += p*reward(pb1, s, a, sp)
+                if isterminal(pb1, s)
+                    @test reward(pb2, si, ai) == 0.0
+                else
+                    td = transition(pb1, s, a)
+                    r_pb1 = 0.0
+                    for (sp, p) in weighted_iterator(td)
+                        if p > 0.0
+                            r_pb1 += p*reward(pb1, s, a, sp)
+                        end
                     end
+                    @test r_pb1 ≈ reward(pb2, si, ai)
                 end
-                @test r_pb1 ≈ reward(pb2, si, ai)
             end
         end
     end
