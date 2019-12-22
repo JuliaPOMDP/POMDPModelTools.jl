@@ -27,7 +27,11 @@ let
     @test :info in nodenames(DDNStructure(mdp))
     s = initialstate(mdp, rng)
     a = rand(rng, actions(mdp))
-    sp, r, i = @inferred gen(DDNOut(:sp,:r,:info), mdp, s, a, rng)
+    if VERSION >= v"1.3"
+        sp, r, i = @inferred gen(DDNOut(:sp,:r,:info), mdp, s, a, rng)
+    else
+        sp, r, i = gen(DDNOut(:sp,:r,:info), mdp, s, a, rng)
+    end
     @test i === nothing
 
     pomdp = TigerPOMDP()
@@ -35,7 +39,11 @@ let
     @test :info in nodenames(DDNStructure(pomdp))
     s = initialstate(pomdp, rng)
     a = rand(rng, actions(pomdp))
-    sp, o, r, i = @inferred gen(DDNOut(:sp,:o,:r,:info), pomdp, s, a, rng)
+    if VERSION >= v"1.3"
+        sp, o, r, i = @inferred gen(DDNOut(:sp,:o,:r,:info), pomdp, s, a, rng)
+    else
+        sp, o, r, i = gen(DDNOut(:sp,:o,:r,:info), pomdp, s, a, rng)
+    end
     @test i === nothing
 
     up = VoidUpdater()
