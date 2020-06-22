@@ -30,12 +30,12 @@ td = transition(MyMDP(), 1.0, 1)
 rand(td) # will return a number near 2
 ```
 """
-struct ImplicitDistribution{F<:Function, A}
+struct ImplicitDistribution{F, A}
     f::F
     args::A
 end
 
-ImplicitDistribution(f::Function, args...) = ImplicitDistribution(f, args)
+ImplicitDistribution(f, args...) = ImplicitDistribution(f, args)
 
 function Base.rand(rng::AbstractRNG, s::Random.SamplerTrivial{<:ImplicitDistribution})
     d = s[]
