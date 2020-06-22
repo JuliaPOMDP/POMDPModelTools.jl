@@ -79,6 +79,10 @@ export
     UnsafeUniform
 include("distributions/uniform.jl")
 
+export
+    ImplicitDistribution
+include("distributions/implicit.jl")
+
 # convenient implementations
 include("convenient_implementations.jl")
 

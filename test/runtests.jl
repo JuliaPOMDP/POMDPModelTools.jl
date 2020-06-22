@@ -37,6 +37,9 @@ using SparseArrays
     @testset "uniform" begin
         include("test_uniform.jl")
     end
+    @testset "implicit" begin
+        include("test_implicit.jl")
+    end
     @testset "terminalstate" begin
         include("test_terminal_state.jl")
     end
