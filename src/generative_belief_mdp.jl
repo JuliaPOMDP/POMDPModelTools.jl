@@ -20,7 +20,7 @@ function POMDPs.gen(bmdp::GenerativeBeliefMDP, b, a, rng::AbstractRNG)
         bp = gbmdp_handle_terminal(bmdp.pomdp, bmdp.updater, b, s, a, rng::AbstractRNG)::typeof(b)
         return bp, 0.0
     end
-    sp, o, r = gen(DDNOut(:sp,:o,:r), bmdp.pomdp, s, a, rng) # maybe this should have been generate_or?
+    sp, o, r = @gen(:sp, :o, :r)(bmdp.pomdp, s, a, rng) # maybe this should have been generate_or?
     bp = update(bmdp.updater, b, a, o)
     return (sp=bp, r=r)
 end

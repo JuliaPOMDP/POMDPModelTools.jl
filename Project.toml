@@ -15,7 +15,7 @@ UnicodePlots = "b8865327-cd53-5732-bb35-84acbb429228"
 [compat]
 Distributions = "0.17, 0.18, 0.19, 0.20, 0.21, 0.22, 0.23"
 POMDPModels = ">= 0.4.3"
-POMDPs = "0.7.3, 0.8.0"
+POMDPs = "0.9"
 UnicodePlots = "1"
 julia = "1"
 

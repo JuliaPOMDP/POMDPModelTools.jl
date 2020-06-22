@@ -22,7 +22,6 @@ include("visualization.jl")
 
 # info interface
 export
-    add_infonode,
     action_info,
     solve_info,
     update_info,
@@ -105,5 +104,9 @@ export
     observation_matrices
 
 include("sparse_tabular.jl")
+
+export
+    add_infonode
+include("deprecated.jl")
 
 end # module
