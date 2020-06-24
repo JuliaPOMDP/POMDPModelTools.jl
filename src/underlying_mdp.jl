@@ -35,11 +35,3 @@ POMDPs.actionindex(mdp::UnderlyingMDP{P,S, Int}, a::Int) where {P,S} = actionind
 POMDPs.actionindex(mdp::UnderlyingMDP{P,S, Bool}, a::Bool) where {P,S} = actionindex(mdp.pomdp, a)
 
 POMDPs.gen(mdp::UnderlyingMDP, s, a, rng) = gen(d, mdp.pomdp, s, a, rng)
-POMDPs.gen(mdp::UnderlyingMDP, s, a, rng) = gen(d, mdp.pomdp, s, a, rng)
-POMDPs.gen(mdp::UnderlyingMDP, s, a, rng) = gen(m.pomdp, s, a, rng)
-
-# deprecated in POMDPs v0.8
-POMDPs.n_actions(mdp::UnderlyingMDP) = n_actions(mdp.pomdp)
-POMDPs.n_states(mdp::UnderlyingMDP) = n_states(mdp.pomdp)
-POMDPs.generate_s(mdp::UnderlyingMDP, s, a, rng::AbstractRNG) = generate_s(mdp.pomdp, s, a, rng)
-POMDPs.generate_sr(mdp::UnderlyingMDP, s, a, rng::AbstractRNG) = generate_sr(mdp.pomdp, s, a, rng)

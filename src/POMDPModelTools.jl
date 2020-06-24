@@ -9,12 +9,14 @@ using UnicodePlots
 import POMDPs: actions, actionindex
 import POMDPs: states, stateindex
 import POMDPs: observations, obsindex
-import POMDPs: sampletype, generate_sr, initialstate, isterminal, discount
+import POMDPs: initialstate, isterminal, discount
 import POMDPs: implemented
 import Distributions: pdf, mode, mean, support
 import Random: rand, rand!
 import Statistics: mean
 import Base: ==
+
+import POMDPLinter: @POMDP_require
 
 export
     render
