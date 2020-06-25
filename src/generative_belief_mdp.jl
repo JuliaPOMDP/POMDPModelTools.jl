@@ -25,15 +25,6 @@ function POMDPs.gen(bmdp::GenerativeBeliefMDP, b, a, rng::AbstractRNG)
     return (sp=bp, r=r)
 end
 
-function generate_sr(bmdp::GenerativeBeliefMDP, b, a, rng::AbstractRNG)
-    x = gen(bmdp, b, a, rng)
-    return x.sp, x.r
-end
-
-function initialstate(bmdp::GenerativeBeliefMDP, rng::AbstractRNG)
-    return initialize_belief(bmdp.updater, initialstate_distribution(bmdp.pomdp))
-end
-
 actions(bmdp::GenerativeBeliefMDP{P,U,B,A}, b::B) where {P,U,B,A} = actions(bmdp.pomdp, b)
 actions(bmdp::GenerativeBeliefMDP) = actions(bmdp.pomdp)
 
@@ -58,4 +49,13 @@ function gbmdp_handle_terminal(pomdp::POMDP, updater::Updater, b, s, a, rng)
     sp, o, r = generate_sor(pomdp, s, a, rng)
     bp = update(updater, b, a, o)
     return bp
+end
+
+function initialstate(bmdp::GenerativeBeliefMDP)
+    return Deterministic(initialize_belief(bmdp.updater, initialstate_distribution(bmdp.pomdp)))
+end
+
+# deprecated in POMDPs v0.9
+function initialstate(bmdp::GenerativeBeliefMDP, rng::AbstractRNG)
+    return initialize_belief(bmdp.updater, initialstate_distribution(bmdp.pomdp))
 end
