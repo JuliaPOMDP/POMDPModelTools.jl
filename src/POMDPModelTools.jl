@@ -9,12 +9,14 @@ using UnicodePlots
 import POMDPs: actions, actionindex
 import POMDPs: states, stateindex
 import POMDPs: observations, obsindex
-import POMDPs: sampletype, generate_sr, initialstate, isterminal, discount
+import POMDPs: initialstate, isterminal, discount
 import POMDPs: implemented
 import Distributions: pdf, mode, mean, support
 import Random: rand, rand!
 import Statistics: mean
 import Base: ==
+
+import POMDPLinter: @POMDP_require
 
 export
     render
@@ -22,7 +24,6 @@ include("visualization.jl")
 
 # info interface
 export
-    add_infonode,
     action_info,
     solve_info,
     update_info,
@@ -105,5 +106,9 @@ export
     observation_matrices
 
 include("sparse_tabular.jl")
+
+export
+    add_infonode
+include("deprecated.jl")
 
 end # module

@@ -20,18 +20,9 @@ function POMDPs.gen(bmdp::GenerativeBeliefMDP, b, a, rng::AbstractRNG)
         bp = gbmdp_handle_terminal(bmdp.pomdp, bmdp.updater, b, s, a, rng::AbstractRNG)::typeof(b)
         return bp, 0.0
     end
-    sp, o, r = gen(DDNOut(:sp,:o,:r), bmdp.pomdp, s, a, rng) # maybe this should have been generate_or?
+    sp, o, r = @gen(:sp, :o, :r)(bmdp.pomdp, s, a, rng) # maybe this should have been generate_or?
     bp = update(bmdp.updater, b, a, o)
     return (sp=bp, r=r)
-end
-
-function generate_sr(bmdp::GenerativeBeliefMDP, b, a, rng::AbstractRNG)
-    x = gen(bmdp, b, a, rng)
-    return x.sp, x.r
-end
-
-function initialstate(bmdp::GenerativeBeliefMDP, rng::AbstractRNG)
-    return initialize_belief(bmdp.updater, initialstate_distribution(bmdp.pomdp))
 end
 
 actions(bmdp::GenerativeBeliefMDP{P,U,B,A}, b::B) where {P,U,B,A} = actions(bmdp.pomdp, b)
@@ -58,4 +49,13 @@ function gbmdp_handle_terminal(pomdp::POMDP, updater::Updater, b, s, a, rng)
     sp, o, r = generate_sor(pomdp, s, a, rng)
     bp = update(updater, b, a, o)
     return bp
+end
+
+function initialstate(bmdp::GenerativeBeliefMDP)
+    return Deterministic(initialize_belief(bmdp.updater, initialstate_distribution(bmdp.pomdp)))
+end
+
+# deprecated in POMDPs v0.9
+function initialstate(bmdp::GenerativeBeliefMDP, rng::AbstractRNG)
+    return initialize_belief(bmdp.updater, initialstate_distribution(bmdp.pomdp))
 end

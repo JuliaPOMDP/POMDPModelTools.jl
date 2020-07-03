@@ -23,6 +23,7 @@ let
     rng = MersenneTwister(7)
 
     mdp = LegacyGridWorld()
+    #=
     POMDPs.DDNStructure(::Type{typeof(mdp)}) = DDNStructure(MDP) |> add_infonode
     @test :info in nodenames(DDNStructure(mdp))
     s = initialstate(mdp, rng)
@@ -45,6 +46,10 @@ let
         sp, o, r, i = gen(DDNOut(:sp,:o,:r,:info), pomdp, s, a, rng)
     end
     @test i === nothing
+    =#
+
+    pomdp = TigerPOMDP()
+    s = initialstate(pomdp, rng)
 
     up = VoidUpdater()
     policy = RandomPolicy(rng, pomdp)
