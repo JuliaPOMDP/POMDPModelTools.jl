@@ -63,27 +63,34 @@ function (sar::LazyCachedSAR)(s, a)::Float64
 end
 
 function mean_reward(m::MDP, s, a)
-    td = transition(m, s, a)
-    rsum = 0.0
-    wsum = 0.0
-    for (sp, w) in weighted_iterator(td)
-        rsum += reward(m, s, a, sp)
-        wsum += w
+    if isterminal(m, s)
+        return 0.0
+    else
+        td = transition(m, s, a)
+        rsum = 0.0
+        wsum = 0.0
+        for (sp, w) in weighted_iterator(td)
+            rsum += reward(m, s, a, sp)
+            wsum += w
+        end
+        return rsum/wsum
     end
-    return rsum/wsum
 end
 
 function mean_reward(m::POMDP, s, a)
-    td = transition(m, s, a)
-    rsum = 0.0
-    wsum = 0.0
-    for (sp, w) in weighted_iterator(td)
-        od = observation(m, s, a, sp)
-        for (o, ow) in weighted_iterator(od)
-            rsum += reward(m, s, a, sp, o)
-            wsum += ow*w
+    if isterminal(m, s)
+        return 0.0
+    else
+        td = transition(m, s, a)
+        rsum = 0.0
+        wsum = 0.0
+        for (sp, w) in weighted_iterator(td)
+            od = observation(m, s, a, sp)
+            for (o, ow) in weighted_iterator(od)
+                rsum += reward(m, s, a, sp, o)
+                wsum += ow*w
+            end
         end
+        return rsum/wsum
     end
-    r = rsum/wsum
-    return r
 end
