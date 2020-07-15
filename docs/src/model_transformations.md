@@ -70,3 +70,9 @@ DocTestSetup = nothing
 ```@docs
 UnderlyingMDP
 ```
+
+## State Action Reward Model
+
+```@docs
+StateActionReward
+```

@@ -84,6 +84,12 @@ export
     ImplicitDistribution
 include("distributions/implicit.jl")
 
+export
+    StateActionReward,
+    FunctionSAR,
+    LazyCachedSAR
+include("state_action_reward.jl")
+
 # convenient implementations
 include("convenient_implementations.jl")
 

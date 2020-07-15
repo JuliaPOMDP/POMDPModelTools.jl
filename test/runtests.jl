@@ -77,4 +77,7 @@ using SparseArrays
         include("test_tabular.jl")
     end
 
+    @testset "reward model" begin
+        include("test_reward_model.jl")
+    end
 end
