@@ -6,7 +6,6 @@ let
     POMDPs.actionindex(m::TigerPOMDPTestFixture, s::Int) = s+1
     POMDPs.observations(::TigerPOMDPTestFixture) = (true, false)
     POMDPs.obsindex(::TigerPOMDPTestFixture, o) = Int(o) + 1
-    POMDPs.n_observations(::TigerPOMDPTestFixture) = 2
 
     pomdp = TigerPOMDPTestFixture()
 
