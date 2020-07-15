@@ -1,5 +1,3 @@
-abstract type StateActionReward end
-
 """
     StateActionReward(m::Union{MDP,POMDP})
 
@@ -24,6 +22,8 @@ rm(true, true)
 -15.0
 ```
 """
+abstract type StateActionReward end
+
 function StateActionReward(m)
     if hasmethod(reward, Tuple{typeof(m), statetype(m), actiontype(m)})
         return FunctionSAR(m)
