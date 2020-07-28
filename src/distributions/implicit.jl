@@ -33,9 +33,9 @@ rand(td) # will return a number near 2
 struct ImplicitDistribution{F, A}
     f::F
     args::A
+    ImplicitDistribution(f, args...) = new{typeof(f), typeof(args)}(f, args)
 end
 
-ImplicitDistribution(f, args...) = ImplicitDistribution(f, args)
 
 function Base.rand(rng::AbstractRNG, s::Random.SamplerTrivial{<:ImplicitDistribution})
     d = s[]
