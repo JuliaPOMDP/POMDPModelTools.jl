@@ -33,6 +33,8 @@ rand(td) # will return a number near 2
 struct ImplicitDistribution{F, A}
     f::F
     args::A
+    
+    # internal constructor needed for single argument case
     ImplicitDistribution(f, args...) = new{typeof(f), typeof(args)}(f, args)
 end
 
