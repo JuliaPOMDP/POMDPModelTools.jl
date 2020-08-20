@@ -27,8 +27,6 @@ export
     action_info,
     solve_info,
     update_info,
-    generate_sri,
-    generate_sori
 include("info.jl")
 
 export

@@ -46,7 +46,7 @@ function gbmdp_handle_terminal(pomdp::POMDP, updater::Updater, b, s, a, rng)
              """)
         warned_about_gbmdp_terminal = true
     end
-    sp, o, r = generate_sor(pomdp, s, a, rng)
+    sp, o, r = @gen(:sp, :o, :r)(pomdp, s, a, rng)
     bp = update(updater, b, a, o)
     return bp
 end
