@@ -49,7 +49,7 @@ let
     =#
 
     pomdp = TigerPOMDP()
-    s = initialstate(pomdp, rng)
+    s = rand(rng, initialstate(pomdp))
 
     up = VoidUpdater()
     policy = RandomPolicy(rng, pomdp)
@@ -62,6 +62,6 @@ let
     d = initialstate_distribution(pomdp)
     b = initialize_belief(up, d)
     a = action(policy, b)
-    sp, o, r = gen(DDNOut(:sp,:o,:r), pomdp, rand(rng, d), a, rng)
+    sp, o, r = @gen(:sp,:o,:r)(pomdp, rand(rng, d), a, rng)
     @inferred update_info(up, b, a, o)
 end

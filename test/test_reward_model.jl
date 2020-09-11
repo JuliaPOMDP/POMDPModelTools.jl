@@ -23,3 +23,19 @@ POMDPs.stateindex(m::RewardModelPOMDP1, s) = s
 POMDPs.actionindex(m::RewardModelPOMDP1, a) = a
 rm = StateActionReward(RewardModelPOMDP1())
 @test rm(1, 1) == 2
+
+m = BabyPOMDP()
+rm = LazyCachedSAR(m)
+for s in states(m)
+    for a in actions(m)
+        @test reward(m, s, a) == rm(s, a)
+    end
+end
+
+m = SimpleGridWorld()
+rm = LazyCachedSAR(m)
+for s in states(m)
+    for a in actions(m)
+        @test reward(m, s, a) == rm(s, a)
+    end
+end

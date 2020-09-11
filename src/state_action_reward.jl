@@ -70,7 +70,7 @@ function mean_reward(m::MDP, s, a)
         rsum = 0.0
         wsum = 0.0
         for (sp, w) in weighted_iterator(td)
-            rsum += reward(m, s, a, sp)
+            rsum += w*reward(m, s, a, sp)
             wsum += w
         end
         return rsum/wsum
@@ -87,7 +87,7 @@ function mean_reward(m::POMDP, s, a)
         for (sp, w) in weighted_iterator(td)
             od = observation(m, s, a, sp)
             for (o, ow) in weighted_iterator(od)
-                rsum += reward(m, s, a, sp, o)
+                rsum += ow*w*reward(m, s, a, sp, o)
                 wsum += ow*w
             end
         end

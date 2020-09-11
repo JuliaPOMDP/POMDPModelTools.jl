@@ -9,8 +9,8 @@ let
     @test observations(pomdp) == states(pomdp)
     @test statetype(pomdp) == obstype(pomdp)
     
-    s_po = initialstate(pomdp, MersenneTwister(1))
-    s_mdp = initialstate(mdp, MersenneTwister(1))
+    s_po = rand(MersenneTwister(1), initialstate(pomdp))
+    s_mdp = rand(MersenneTwister(1), initialstate(mdp))
     @test s_po == s_mdp
 
     solver = ValueIterationSolver(max_iterations = 100)
@@ -20,7 +20,7 @@ let
         mdp_policy.util == pomdp_policy.util
     end
 
-    is = initialstate(mdp, MersenneTwister(3))
+    is = rand(MersenneTwister(3), initialstate(mdp))
     for (sp, o, r) in stepthrough(pomdp,
                                FunctionPolicy(o->:left),
                                PreviousObservationUpdater(),

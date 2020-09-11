@@ -26,7 +26,7 @@ include("visualization.jl")
 export
     action_info,
     solve_info,
-    update_info,
+    update_info
 include("info.jl")
 
 export

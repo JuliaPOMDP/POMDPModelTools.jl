@@ -43,7 +43,3 @@ POMDPs.convert_a(T::Type{A}, vec::V, pomdp::FullyObservablePOMDP) where {A,V<:Ab
 POMDPs.reward(pomdp::FullyObservablePOMDP, s, a) = reward(pomdp.mdp, s, a)
 POMDPs.initialstate(m::FullyObservablePOMDP) = initialstate(m.mdp)
 POMDPs.initialobs(m::FullyObservablePOMDP, s) = Deterministic(s)
-
-# deprecated in POMDPs v0.9
-POMDPs.initialstate_distribution(pomdp::FullyObservablePOMDP) = initialstate_distribution(pomdp.mdp)
-POMDPs.initialstate(pomdp::FullyObservablePOMDP, rng::AbstractRNG) = initialstate(pomdp.mdp, rng)
