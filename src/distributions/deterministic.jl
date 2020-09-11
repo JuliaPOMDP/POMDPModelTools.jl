@@ -1,5 +1,5 @@
 """
-    Detrministic(value)
+    Deterministic(value)
 
 Create a deterministic distribution over only one value.
 
