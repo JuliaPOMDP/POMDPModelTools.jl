@@ -36,7 +36,13 @@ struct FunctionSAR{M} <: StateActionReward
     m::M
 end
 
-(sar::FunctionSAR)(s, a) = reward(sar.m, s, a)
+function (sar::FunctionSAR)(s, a)
+    if isterminal(sar.m, s)
+        return 0.0
+    else
+        return reward(sar.m, s, a)
+    end
+end
 
 struct LazyCachedSAR{M} <: StateActionReward
     m::M
