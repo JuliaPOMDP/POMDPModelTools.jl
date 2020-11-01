@@ -5,6 +5,7 @@ using Random
 using LinearAlgebra
 using SparseArrays
 using UnicodePlots
+import CommonRLInterface
 
 import POMDPs: actions, actionindex
 import POMDPs: states, stateindex
@@ -108,8 +109,17 @@ export
     transition_matrices,
     reward_matrix,
     observation_matrices
-
 include("sparse_tabular.jl")
+
+export
+    MDPCommonRLEnv,
+    POMDPCommonRLEnv
+include("common_rl/to_env.jl") 
+
+export
+    OpaqueRLEnvMDP,
+    RLEnvMDP
+include("common_rl/from_env.jl") 
 
 export
     add_infonode

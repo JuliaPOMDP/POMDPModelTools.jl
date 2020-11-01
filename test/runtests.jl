@@ -10,6 +10,7 @@ using POMDPPolicies
 import Distributions.Categorical
 using SparseArrays
 using DiscreteValueIteration
+import CommonRLInterface
 
 @testset "POMDPModelTools" begin
     @testset "ordered" begin
@@ -76,5 +77,9 @@ using DiscreteValueIteration
 
     @testset "reward model" begin
         include("test_reward_model.jl")
+    end
+
+    @testset "Common RL" begin
+        include("test_common_rl.jl")
     end
 end
