@@ -117,8 +117,10 @@ export
 include("common_rl/to_env.jl") 
 
 export
+    RLEnvMDP,
+    RLEnvPOMDP,
     OpaqueRLEnvMDP,
-    RLEnvMDP
+    OpaqueRLEnvPOMDP
 include("common_rl/from_env.jl") 
 
 export

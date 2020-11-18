@@ -101,3 +101,30 @@ end
     @test m2 isa RLEnvMDP
     @test simulate(RolloutSimulator(), m2, FunctionPolicy(s->1)) == 3.0
 end
+
+@testset "Env to POMDP" begin
+    mutable struct POMDPEnv <: RL.AbstractMarkovEnv
+        s::Int
+    end
+
+    RL.reset!(env::POMDPEnv) = env.s = 1
+    RL.actions(env::POMDPEnv) = [-1, 1]
+    RL.observe(env::POMDPEnv) = [env.s > 0]
+    RL.terminated(env::POMDPEnv) = env.s >= 3
+    function RL.act!(env::POMDPEnv, a)
+        r = env.s
+        env.s = max(1, env.s + a)
+        return r
+    end
+
+    m1 = convert(POMDP, POMDPEnv(1))
+    @test m1 isa OpaqueRLEnvPOMDP
+    @test simulate(RolloutSimulator(), m1, FunctionPolicy(s->1)) == 3.0
+
+    RL.@provide RL.state(env::POMDPEnv) = env.s
+    RL.@provide RL.setstate!(env::POMDPEnv, s) = env.s = s
+
+    m2 = convert(POMDP, POMDPEnv(1))
+    @test m2 isa RLEnvPOMDP
+    @test simulate(RolloutSimulator(), m2, FunctionPolicy(s->1)) == 3.0
+end
