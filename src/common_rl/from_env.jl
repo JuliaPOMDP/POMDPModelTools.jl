@@ -169,6 +169,9 @@ function Base.convert(::Type{MDP}, env::RL.AbstractEnv)
     return OpaqueRLEnvMDP(env)
 end
 
+Base.convert(E::Type{<:RL.AbstractEnv}, m::AbstractRLEnvProblem) = convert(E, m.env)
+Base.convert(::Type{RL.AbstractEnv}, m::AbstractRLEnvProblem) = m.env
+
 struct OpaqueRLEnvStateError <: Exception
     env
     env_age::BigInt

@@ -83,4 +83,7 @@ function Base.convert(::Type{RL.AbstractMarkovEnv}, m::MDP)
     return MDPCommonRLEnv{AbstractArray}(m, s)
 end
 
+Base.convert(::Type{MDP}, env::MDPCommonRLEnv) = env.m
+Base.convert(::Type{POMDP}, env::POMDPCommonRLEnv) = env.m
+
 Base.convert(::Type{RL.AbstractEnv}, m::Union{MDP,POMDP}) = convert(RL.AbstractMarkovEnv, m)

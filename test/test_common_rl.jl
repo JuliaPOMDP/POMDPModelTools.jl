@@ -33,6 +33,8 @@ const RL = CommonRLInterface
     @test RL.act!(env2, 1) == 3
     @test RL.observe(env2) == [3]
     @test RL.observe(env) == [2]
+
+    @test convert(MDP, env) isa RLTestMDP
 end
 
 @testset "POMDP to Env" begin
@@ -73,6 +75,7 @@ end
     @test RL.observe(env2) == [4]
     @test RL.observe(env) == [3]
 
+    @test convert(POMDP, env) isa RLTestPOMDP
 end
 
 @testset "Env to MDP" begin
@@ -100,6 +103,8 @@ end
     m2 = convert(MDP, MDPEnv(1))
     @test m2 isa RLEnvMDP
     @test simulate(RolloutSimulator(), m2, FunctionPolicy(s->1)) == 3.0
+
+    @test convert(RL.AbstractEnv, m1) isa MDPEnv
 end
 
 @testset "Env to POMDP" begin
@@ -127,4 +132,6 @@ end
     m2 = convert(POMDP, POMDPEnv(1))
     @test m2 isa RLEnvPOMDP
     @test simulate(RolloutSimulator(), m2, FunctionPolicy(s->1)) == 3.0
+
+    @test convert(RL.AbstractEnv, m1) isa POMDPEnv
 end
