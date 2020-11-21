@@ -10,7 +10,16 @@ mutable struct MDPCommonRLEnv{RLO, M<:MDP, S} <: AbstractPOMDPsCommonRLEnv
     s::S
 end
 
-MDPCommonRLEnv{RLO}(m, s) where {RLO} = MDPCommonRLEnv{RLO, typeof(m), typeof(s)}(m, s)
+"""
+    MDPCommonRLEnv(m, [s])
+    MDPCommonRLEnv{RLO}(m, [s])
+ 
+Create a CommonRLInterface environment from MDP m; optionally specify the state 's'.
+
+The `RLO` parameter can be used to specify a type to convert the observation to. By default, this is `AbstractArray`. Use `Any` to disable conversion.
+"""
+MDPCommonRLEnv{RLO}(m, s=rand(initialstate(m))) where {RLO} = MDPCommonRLEnv{RLO, typeof(m), statetype(m)}(m, s)
+MDPCommonRLEnv(m, s=rand(initialstate(m))) = MDPCommonRLEnv{AbstractArray}(m, s)
 
 function RL.reset!(env::MDPCommonRLEnv)
     env.s = rand(initialstate(env.m))
@@ -43,7 +52,16 @@ mutable struct POMDPCommonRLEnv{RLO, M<:POMDP, S, O} <: AbstractPOMDPsCommonRLEn
     o::O
 end
 
-POMDPCommonRLEnv{RLO}(m, s, o) where {RLO} = POMDPCommonRLEnv{RLO, typeof(m), typeof(s), typeof(o)}(m, s, o)
+"""
+    POMDPCommonRLEnv(m, [s], [o])
+    POMDPCommonRLEnv{RLO}(m, [s], [o])
+ 
+Create a CommonRLInterface environment from POMDP m; optionally specify the state 's' and observation 'o'.
+
+The `RLO` parameter can be used to specify a type to convert the observation to. By default, this is `AbstractArray`. Use `Any` to disable conversion.
+"""
+POMDPCommonRLEnv{RLO}(m, s=rand(initialstate(m)), o=rand(initialobs(m, s))) where {RLO} = POMDPCommonRLEnv{RLO, typeof(m), statetype(m), obstype(m)}(m, s, o)
+POMDPCommonRLEnv(m, s=rand(initialstate(m)), o=rand(initialobs(m, s))) = POMDPCommonRLEnv{AbstractArray}(m, s, o)
 
 function RL.reset!(env::POMDPCommonRLEnv)
     env.s = rand(initialstate(env.m))
@@ -72,16 +90,8 @@ RL.@provide function RL.setstate!(env::POMDPCommonRLEnv, so)
     return nothing
 end
 
-function Base.convert(::Type{RL.AbstractMarkovEnv}, m::POMDP)
-    s = rand(initialstate(m))
-    o = rand(initialobs(m, s))
-    return POMDPCommonRLEnv{AbstractArray}(m, s, o)
-end
-
-function Base.convert(::Type{RL.AbstractMarkovEnv}, m::MDP)
-    s = rand(initialstate(m))
-    return MDPCommonRLEnv{AbstractArray}(m, s)
-end
+Base.convert(::Type{RL.AbstractMarkovEnv}, m::POMDP) = POMDPCommonRLEnv(m)
+Base.convert(::Type{RL.AbstractMarkovEnv}, m::MDP) = MDPCommonRLEnv(m)
 
 Base.convert(::Type{MDP}, env::MDPCommonRLEnv) = env.m
 Base.convert(::Type{POMDP}, env::POMDPCommonRLEnv) = env.m

@@ -38,7 +38,12 @@ struct RLEnvMDP{E, S, A} <: AbstractRLEnvMDP{S, A}
     discount::Float64
 end
 
-function RLEnvMDP(env, discount=1.0)
+"""
+    RLEnvMDP(env; discount=1.0)
+
+Create an `MDP` by wrapping a `CommonRLInterface.AbstractEnv`. `state` and `setstate!` from `CommonRLInterface` must be provided, and the `POMDPs` generative model functionality will be provided.
+"""
+function RLEnvMDP(env; discount=1.0)
     S = infer_statetype(env)
     if S == Any
         @warn("State type inferred for $(typeof(env)) by looking at the return type of state(env) was Any. This could cause significant performance degradation.")
@@ -54,12 +59,17 @@ function POMDPs.gen(m::RLEnvMDP, s, a, rng)
     return (sp=sp, r=r)
 end
 
+"""
+    RLEnvPOMDP(env; discount=1.0)
+
+Create an `POMDP` by wrapping a `CommonRLInterface.AbstractEnv`. `state` and `setstate!` from `CommonRLInterface` must be provided, and the `POMDPs` generative model functionality will be provided.
+"""
 struct RLEnvPOMDP{E, S, A, O} <: AbstractRLEnvPOMDP{S, A, O}
     env::E
     discount::Float64
 end
 
-function RLEnvPOMDP(env, discount=1.0)
+function RLEnvPOMDP(env; discount=1.0)
     S = infer_statetype(env)
     if S == Any
         @warn("State type inferred for $(typeof(env)) by looking at the return type of state(env) was Any. This could cause significant performance degradation.")
@@ -94,7 +104,12 @@ mutable struct OpaqueRLEnvMDP{E, A} <: AbstractRLEnvMDP{OpaqueRLEnvState, A}
     discount::Float64
 end
 
-function OpaqueRLEnvMDP(env, discount=1.0)
+"""
+    OpaqueRLEnvMDP(env; discount=1.0)
+
+Wrap a `CommonRLInterface.AbstractEnv` in an `MDP` object. The state will be an `OpaqueRLEnvState` and only simulation will be supported.
+"""
+function OpaqueRLEnvMDP(env; discount::Float64=1.0)
     return OpaqueRLEnvMDP{typeof(env), eltype(RL.actions(env))}(env, 1, discount)
 end
 
@@ -104,6 +119,11 @@ mutable struct OpaqueRLEnvPOMDP{E, A, O} <: AbstractRLEnvPOMDP{OpaqueRLEnvState,
     discount::Float64
 end
 
+"""
+    OpaqueRLEnvPOMDP(env; discount=1.0)
+
+Wrap a `CommonRLInterface.AbstractEnv` in an `POMDP` object. The state will be an `OpaqueRLEnvState` and only simulation will be supported.
+"""
 function OpaqueRLEnvPOMDP(env, discount=1.0)
     return OpaqueRLEnvPOMDP{typeof(env), eltype(RL.actions(env)), typeof(RL.observe(env))}(env, 1, discount)
 end
