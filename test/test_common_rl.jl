@@ -100,9 +100,14 @@ end
     RL.@provide RL.state(env::MDPEnv) = env.s
     RL.@provide RL.setstate!(env::MDPEnv, s) = env.s = s
 
-    m2 = convert(MDP, MDPEnv(1))
+    env = MDPEnv(1)
+    m2 = convert(MDP, env)
     @test m2 isa RLEnvMDP
     @test simulate(RolloutSimulator(), m2, FunctionPolicy(s->1)) == 3.0
+
+    RL.setstate!(env, 1)
+    @test isterminal(m2, 3)
+    @test RL.state(env) == 1
 
     @test convert(RL.AbstractEnv, m1) isa MDPEnv
 end
@@ -129,9 +134,14 @@ end
     RL.@provide RL.state(env::POMDPEnv) = env.s
     RL.@provide RL.setstate!(env::POMDPEnv, s) = env.s = s
 
-    m2 = convert(POMDP, POMDPEnv(1))
+    env = POMDPEnv(1)
+    m2 = convert(POMDP, env)
     @test m2 isa RLEnvPOMDP
     @test simulate(RolloutSimulator(), m2, FunctionPolicy(s->1)) == 3.0
+
+    RL.setstate!(env, 1)
+    @test isterminal(m2, 3)
+    @test RL.state(env) == 1
 
     @test convert(RL.AbstractEnv, m1) isa POMDPEnv
 end

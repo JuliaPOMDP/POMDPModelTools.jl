@@ -8,8 +8,11 @@ POMDPs.discount(m::AbstractRLEnvProblem) = m.discount
 
 function POMDPs.actions(m::AbstractRLEnvProblem, s)
     if provided(RL.valid_actions, m.env)
+        old = RL.state(m.env)
         RL.setstate!(m.env, s)
-        return RL.valid_actions(m.env)
+        va = RL.valid_actions(m.env)
+        RL.setstate!(m.env, old)
+        return va
     else
         return RL.actions(m.env)
     end
@@ -23,8 +26,11 @@ function POMDPs.initialstate(m::AbstractRLEnvProblem)
 end
 
 function POMDPs.isterminal(m::AbstractRLEnvProblem, s)
+    old = RL.state(m.env)
     RL.setstate!(m.env, s)
-    return RL.terminated(m.env)
+    t = RL.terminated(m.env)
+    RL.setstate!(m.env, old)
+    return t
 end
 
 struct RLEnvMDP{E, S, A} <: AbstractRLEnvMDP{S, A}
