@@ -27,13 +27,15 @@ a = action(planner, initialstate(m))
 
 You can also use the constructors listed below to manually convert between the interfaces.
 
-Since the standard reinforcement learning environment interface offers less information about the internal workings of the environment than the POMDPs.jl interface, MDPs and POMDPs created from these environments will have limited functionality.
+## Environment Wrapper Types
 
-## Generative model wrappers
+Since the standard reinforcement learning environment interface offers less information about the internal workings of the environment than the POMDPs.jl interface, MDPs and POMDPs created from these environments will have limited functionality. There are two types of (PO)MDP types that can wrap an environment:
+
+### Generative model wrappers
 
 If the `state` and `setstate!` CommonRLInterface functions are provided, then the environment can be wrapped in a [`RLEnvMDP`](@ref) or [`RLEnvPOMDP`](@ref) and the POMDPs.jl generative model interface will be available.
 
-## Opaque wrappers
+### Opaque wrappers
 
 If the `state` and `setstate!` are not provided, then the resulting `POMDP` or `MDP` can only be simulated. This case is represented using the [`OpaqueRLEnvPOMDP`](@ref) and [`OpaqueRLEnvMDP`](@ref) wrappers. From the POMDPs.jl perspective, the state of the opaque (PO)MDP is just an integer wrapped in an `OpaqueRLEnvState`. This keeps track of the "age" of the environment so that POMDPs.jl actions that attempt to interact with the environment at a different age are invalid.
 
