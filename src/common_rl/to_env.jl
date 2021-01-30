@@ -1,6 +1,6 @@
 const RL = CommonRLInterface
 
-abstract type AbstractPOMDPsCommonRLEnv <: RL.AbstractMarkovEnv end
+abstract type AbstractPOMDPsCommonRLEnv <: RL.AbstractEnv end
 
 RL.actions(env::AbstractPOMDPsCommonRLEnv) = actions(env.m)
 RL.terminated(env::AbstractPOMDPsCommonRLEnv) = isterminal(env.m, env.s)
@@ -38,8 +38,9 @@ RL.@provide RL.clone(env::MDPCommonRLEnv{RLO}) where {RLO} = MDPCommonRLEnv{RLO}
 RL.@provide RL.render(env::MDPCommonRLEnv) = render(env.m, (sp=env.s,))
 RL.@provide RL.state(env::MDPCommonRLEnv{RLO}) where {RLO} = convert_s(RLO, env.s, env.m)
 RL.@provide RL.valid_actions(env::MDPCommonRLEnv) = actions(env.m, env.s)
-RL.@provide RL.observations(env::MDPCommonRLEnv{RLO}) where {RLO} = (convert_s(RLO, s, env.m) for s in states(env.m)) # should really be some kind of lazy map that handles uncountably infinite spaces
 
+RL.observations(env::MDPCommonRLEnv{RLO}) where {RLO} = (convert_s(RLO, s, env.m) for s in states(env.m)) # should really be some kind of lazy map that handles uncountably infinite spaces
+RL.provided(::typeof(RL.observations), ::Type{<:Tuple{MDPCommonRLEnv{<:Any, M, <:Any}}}) where {M} = static_hasmethod(states, Tuple{<:M})
 
 RL.@provide function RL.setstate!(env::MDPCommonRLEnv{<:Any, <:Any, S}, s) where S
     env.s = convert_s(S, s, env.m)
@@ -82,7 +83,9 @@ RL.@provide RL.clone(env::POMDPCommonRLEnv{RLO}) where {RLO} = POMDPCommonRLEnv{
 RL.@provide RL.render(env::POMDPCommonRLEnv) = render(env.m, (sp=env.s, o=env.o))
 RL.@provide RL.state(env::POMDPCommonRLEnv) = (env.s, env.o)
 RL.@provide RL.valid_actions(env::POMDPCommonRLEnv) = actions(env.m, env.s)
-RL.@provide RL.observations(env::POMDPCommonRLEnv{RLO}) where {RLO} = (convert_o(RLO, o, env.m) for o in observations(env.m)) # should really be some kind of lazy map that handles uncountably infinite spaces
+
+RL.observations(env::POMDPCommonRLEnv{RLO}) where {RLO} = (convert_o(RLO, o, env.m) for o in observations(env.m)) # should really be some kind of lazy map that handles uncountably infinite spaces
+RL.provided(::typeof(RL.observations), ::Type{<:Tuple{POMDPCommonRLEnv{<:Any, M, <:Any, <:Any}}}) where {M} = static_hasmethod(observations, Tuple{<:M})
 
 RL.@provide function RL.setstate!(env::POMDPCommonRLEnv, so)
     env.s = first(so)
@@ -90,10 +93,8 @@ RL.@provide function RL.setstate!(env::POMDPCommonRLEnv, so)
     return nothing
 end
 
-Base.convert(::Type{RL.AbstractMarkovEnv}, m::POMDP) = POMDPCommonRLEnv(m)
-Base.convert(::Type{RL.AbstractMarkovEnv}, m::MDP) = MDPCommonRLEnv(m)
+Base.convert(::Type{RL.AbstractEnv}, m::POMDP) = POMDPCommonRLEnv(m)
+Base.convert(::Type{RL.AbstractEnv}, m::MDP) = MDPCommonRLEnv(m)
 
 Base.convert(::Type{MDP}, env::MDPCommonRLEnv) = env.m
 Base.convert(::Type{POMDP}, env::POMDPCommonRLEnv) = env.m
-
-Base.convert(::Type{RL.AbstractEnv}, m::Union{MDP,POMDP}) = convert(RL.AbstractMarkovEnv, m)

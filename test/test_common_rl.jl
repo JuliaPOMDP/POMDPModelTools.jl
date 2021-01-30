@@ -4,13 +4,17 @@ const RL = CommonRLInterface
     struct RLTestMDP <: MDP{Int, Int} end
 
     POMDPs.actions(m::RLTestMDP) = [-1, 1]
-    POMDPs.states(m::RLTestMDP) = 1:3
     POMDPs.transition(m::RLTestMDP, s, a) = Deterministic(clamp(s + a, 1, 3))
     POMDPs.initialstate(m::RLTestMDP) = Deterministic(1)
     POMDPs.isterminal(m::RLTestMDP, s) = s == 3
     POMDPs.reward(m::RLTestMDP, s, a, sp) = sp
 
     env = convert(RL.AbstractEnv, RLTestMDP())
+
+    @test !RL.provided(RL.observations, env)
+    POMDPs.states(m::RLTestMDP) = 1:3
+    @test RL.provided(RL.observations, env)
+    @test all(only.(RL.observations(env)) .== states(RLTestMDP()))
 
     @test RL.actions(env) == [-1, 1]
     @test RL.valid_actions(env) == [-1, 1]
@@ -42,7 +46,6 @@ end
 
     POMDPs.actions(m::RLTestPOMDP) = [-1, 1]
     POMDPs.states(m::RLTestPOMDP) = 1:3
-    POMDPs.observations(m::RLTestPOMDP) = 2:4
     POMDPs.transition(m::RLTestPOMDP, s, a) = Deterministic(clamp(s + a, 1, 3))
     POMDPs.observation(m::RLTestPOMDP, s, a, sp) = Deterministic(sp + 1)
     POMDPs.initialstate(m::RLTestPOMDP) = Deterministic(1)
@@ -51,6 +54,12 @@ end
     POMDPs.reward(m::RLTestPOMDP, s, a, sp) = sp
 
     env = convert(RL.AbstractEnv, RLTestPOMDP())
+
+    @test !RL.provided(RL.observations, env)
+    POMDPs.observations(m::RLTestPOMDP) = 2:4
+    @test RL.provided(RL.observations, env)
+    @test all(only.(RL.observations(env)) .== observations(RLTestPOMDP()))
+
 
     @test RL.actions(env) == [-1, 1]
     @test RL.valid_actions(env) == [-1, 1]
@@ -79,7 +88,7 @@ end
 end
 
 @testset "Env to MDP" begin
-    mutable struct MDPEnv <: RL.AbstractMarkovEnv
+    mutable struct MDPEnv <: RL.AbstractEnv
         s::Int
     end
 
@@ -113,7 +122,7 @@ end
 end
 
 @testset "Env to POMDP" begin
-    mutable struct POMDPEnv <: RL.AbstractMarkovEnv
+    mutable struct POMDPEnv <: RL.AbstractEnv
         s::Int
     end
 

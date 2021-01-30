@@ -6,6 +6,7 @@ using LinearAlgebra
 using SparseArrays
 using UnicodePlots
 import CommonRLInterface
+using Tricks: static_hasmethod
 
 import POMDPs: actions, actionindex
 import POMDPs: states, stateindex
