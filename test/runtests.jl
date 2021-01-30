@@ -12,6 +12,10 @@ using SparseArrays
 using DiscreteValueIteration
 import CommonRLInterface
 
+using Documenter: doctest
+
+doctest(POMDPModelTools)
+
 @testset "POMDPModelTools" begin
     @testset "ordered" begin
         include("test_ordered_spaces.jl")
