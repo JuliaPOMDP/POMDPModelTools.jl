@@ -83,6 +83,10 @@ doctest(POMDPModelTools)
         include("test_reward_model.jl")
     end
 
+    @testset "matrices" begin
+        include("test_matrices.jl")
+    end
+
     @testset "Common RL" begin
         include("test_common_rl.jl")
     end
