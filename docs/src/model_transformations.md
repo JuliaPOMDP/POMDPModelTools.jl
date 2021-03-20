@@ -2,6 +2,15 @@
 
 POMDPModelTools contains several tools for transforming problems into other classes so that they can be used by different solvers.
 
+## Linear Algebra Representations
+
+For some algorithms, such as value iteration, it is convenient to use vectors that contain the reward for every state, and matrices that contain the transition probabilities. These can be constructed with the following functions:
+
+```@docs
+transition_matrices
+reward_vectors
+```
+
 ## Sparse Tabular MDPs and POMDPs
 
 The `SparseTabularMDP` and `SparseTabularPOMDP` represents discrete problems defined using the explicit interface. The transition and observation models are represented using sparse matrices. Solver writers can leverage these data structures to write efficient vectorized code. A problem writer can define its problem using the explicit interface and it can be automatically converted to a sparse tabular representation by calling the constructors `SparseTabularMDP(::MDP)` or `SparseTabularPOMDP(::POMDP)`. See the following docs to know more about the matrix representation and how to access the fields of the `SparseTabular` objects:
@@ -12,7 +21,6 @@ SparseTabularPOMDP
 transition_matrix
 reward_vector
 observation_matrix
-transition_matrices
 reward_matrix
 observation_matrices
 ```

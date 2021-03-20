@@ -107,10 +107,14 @@ export
     transition_matrix,
     reward_vector,
     observation_matrix,
-    transition_matrices,
     reward_matrix,
     observation_matrices
 include("sparse_tabular.jl")
+
+export
+    transition_matrices,
+    reward_vectors
+include("matrices.jl")
 
 export
     MDPCommonRLEnv,
