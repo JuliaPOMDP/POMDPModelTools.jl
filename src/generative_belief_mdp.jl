@@ -10,7 +10,7 @@ end
 
 function GenerativeBeliefMDP(pomdp::P, up::U) where {P<:POMDP, U<:Updater}
     # XXX hack to determine belief type
-    b0 = initialize_belief(up, initialstate_distribution(pomdp))
+    b0 = initialize_belief(up, initialstate(pomdp))
     GenerativeBeliefMDP{P, U, typeof(b0), actiontype(pomdp)}(pomdp, up)
 end
 
