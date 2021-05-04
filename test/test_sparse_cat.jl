@@ -18,7 +18,19 @@ let
     @test Random.gentype(dt) == Symbol
     @test Random.gentype(typeof(dt)) == Symbol
     @inferred rand(Random.GLOBAL_RNG, dt)
+    
+    # rand(::SparseCat)
+    samples = Symbol[]
+    N = 100_000
+    @time for i in 1:N
+        push!(samples, rand(d))
+    end
+    @test isapprox(count(samples.==:a)/N, pdf(d,:a), atol=0.005)
+    @test isapprox(count(samples.==:b)/N, pdf(d,:b), atol=0.005)
+    @test isapprox(count(samples.==:c)/N, pdf(d,:c), atol=0.005)
+    @test isapprox(count(samples.==:d)/N, pdf(d,:d), atol=0.005)
 
+    # rand(rng, ::SparseCat)
     rng = MersenneTwister(14)
     samples = Symbol[]
     N = 100_000
