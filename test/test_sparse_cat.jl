@@ -42,6 +42,13 @@ let
     @test isapprox(count(samples.==:c)/N, pdf(d,:c), atol=0.005)
     @test isapprox(count(samples.==:d)/N, pdf(d,:d), atol=0.005)
 
+    # rand(::SparseCat, ::Integer)
+    samples = rand(d, N)
+    @test isapprox(count(samples.==:a)/N, pdf(d,:a), atol=0.005)
+    @test isapprox(count(samples.==:b)/N, pdf(d,:b), atol=0.005)
+    @test isapprox(count(samples.==:c)/N, pdf(d,:c), atol=0.005)
+    @test isapprox(count(samples.==:d)/N, pdf(d,:d), atol=0.005)
+
     @test_throws ErrorException rand(Random.GLOBAL_RNG, SparseCat([1], [0.0]))
 
     @test sprint((io,d)->show(io,MIME("text/plain"),d), d) == sprint((io,d)->showdistribution(io,d,title="SparseCat distribution"), d)
