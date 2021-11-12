@@ -9,8 +9,7 @@ struct Deterministic{T}
     val::T
 end
 
-rand(rng::AbstractRNG, d::Deterministic) = d.val
-rand(d::Deterministic) = d.val
+rand(rng::AbstractRNG, s::Random.SamplerTrivial{<:Deterministic}) = s[].val
 support(d::Deterministic) = (d.val,)
 sampletype(::Type{Deterministic{T}}) where T = T
 Random.gentype(::Type{Deterministic{T}}) where T = T

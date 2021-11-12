@@ -12,7 +12,8 @@ struct SparseCat{V, P}
     probs::P
 end
 
-function rand(rng::AbstractRNG, d::SparseCat)
+function rand(rng::AbstractRNG, s::Random.SamplerTrivial{<:SparseCat})
+    d = s[]
     r = sum(d.probs)*rand(rng)
     tot = zero(eltype(d.probs))
     for (v, p) in d
