@@ -52,4 +52,17 @@ let
     @test_throws ErrorException rand(Random.GLOBAL_RNG, SparseCat([1], [0.0]))
 
     @test sprint((io,d)->show(io,MIME("text/plain"),d), d) == sprint((io,d)->showdistribution(io,d,title="SparseCat distribution"), d)
+
+    @testset "#35" begin
+        p = []
+        push!(p, 1.0)
+        d = SparseCat(["something"], p)
+        @test rand(d) == "something"
+        @test pdf(d, "something") == 1.0
+        @test pdf(d, "something else") == 0.0
+    end
+
+    @testset "reverse" begin
+        @test_throws MethodError SparseCat([1], ["something"])
+    end
 end
