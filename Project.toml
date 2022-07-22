@@ -1,7 +1,7 @@
 name = "POMDPModelTools"
 uuid = "08074719-1b2a-587c-a292-00f91cc44415"
 authors = ["JuliaPOMDP Contributors"]
-version = "0.3.12"
+version = "0.3.13"
 
 [deps]
 CommonRLInterface = "d842c3ba-07a1-494f-bbec-f5741b0a3e98"
